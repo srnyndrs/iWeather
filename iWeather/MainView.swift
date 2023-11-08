@@ -24,7 +24,8 @@ struct MainView: View {
                 Text("Home")
             }
             VStack {
-                LocationScene()
+                let locationViewModel = LocationListViewModel()
+                LocationScene(weatherService: weatherService)
                     .environment(\.managedObjectContext, viewContext)
                     .environmentObject(locationHolder)
             }.tabItem {

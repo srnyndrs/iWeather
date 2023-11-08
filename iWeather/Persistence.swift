@@ -9,6 +9,10 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
+    let container: NSPersistentContainer
+    var viewContext: NSManagedObjectContext {
+        return container.viewContext
+    }
 
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
@@ -24,8 +28,6 @@ struct PersistenceController {
         return result
     }()
 
-    let container: NSPersistentContainer
-
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "iWeather")
         if inMemory {
@@ -33,20 +35,41 @@ struct PersistenceController {
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    func saveContext() {
+        do {
+            try viewContext.save()
+        } catch {
+            viewContext.rollback()
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getAllLocation() -> [Location] {
+        let request = NSFetchRequest<Location>(entityName: "Location")
+
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            return []
+        }
+    }
+
+    func addLocation(name: String, lat: Double, lon: Double) {
+        let newLocation = Location(context: viewContext)
+        newLocation.name = name
+        newLocation.latitude = lat
+        newLocation.longitude = lon
+        saveContext()
+    }
+
+    func deleteLocation(location: Location) {
+        viewContext.delete(location)
+        saveContext()
     }
 }

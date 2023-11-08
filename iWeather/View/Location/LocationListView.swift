@@ -7,8 +7,10 @@
 
 import SwiftUI
 import CoreData
+import CoreLocation
 
 struct LocationListView: View {
+    @ObservedObject var weatherService: WeatherService
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var locationHolder: LocationHolder
 
@@ -24,8 +26,14 @@ struct LocationListView: View {
                 ZStack {
                     List {
                         ForEach(items) { item in
-                            NavigationLink(destination: LocationEditView(passedLocation: item).environmentObject(locationHolder)) {
+                            /*NavigationLink(destination: LocationEditView(passedLocation: item).environmentObject(locationHolder)) {
                                 Text(item.name ?? "")
+                            }*/
+                            let viewModel = WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                            NavigationLink(destination: LocationDetailView(viewModel: viewModel).environmentObject(locationHolder)) {
+                                WeatherCardView(weatherViewModel: viewModel).task {
+                                    await viewModel.refresh()
+                                }
                             }
                         }
                         .onDelete(perform: deleteItems)
@@ -35,7 +43,6 @@ struct LocationListView: View {
                             EditButton()
                         }
                     }
-                    
                     FloatingButton()
                         .environmentObject(locationHolder)
                 }
@@ -49,15 +56,4 @@ struct LocationListView: View {
             locationHolder.saveContext(viewContext)
         }
     }
-}
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-#Preview {
-    LocationListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
