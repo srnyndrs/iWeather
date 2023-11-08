@@ -11,18 +11,23 @@ import SwiftUI
 struct iWeatherApp: App {
     let persistenceController = PersistenceController.shared
     private var weatherService = WeatherService()
+    private var locationManager = LocationManager()
 
     var body: some Scene {
         WindowGroup {
-            let weatherViewModel = WeatherViewModel(weatherService: weatherService)
-            let forecastViewModel = ForecastViewModel(weatherService: weatherService)
-            
-            let context = persistenceController.container.viewContext
-            let locationHolder = LocationHolder(context)
-            
-            MainView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .environmentObject(locationHolder)
+            if locationManager.authorizationStatus == .authorizedWhenInUse {
+                let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: locationManager.locationCoordinate)
+                let forecastViewModel = ForecastViewModel(weatherService: weatherService, location: locationManager.locationCoordinate)
+                
+                let context = persistenceController.container.viewContext
+                let locationHolder = LocationHolder(context)
+                
+                MainView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel, locationManager: locationManager, weatherService: weatherService)
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(locationHolder)
+            } else {
+                Text("The location is not granted!")
+            }
         }
     }
 }

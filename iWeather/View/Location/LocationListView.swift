@@ -39,7 +39,7 @@ struct LocationListView: View {
                     FloatingButton()
                         .environmentObject(locationHolder)
                 }
-            }.navigationTitle("Location list")
+            }.navigationTitle("Locations")
         }
     }
     

@@ -8,10 +8,14 @@
 import Foundation
 import CoreLocation
 
-class OldLocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     var locationManager = CLLocationManager()
     @Published var authorizationStatus: CLAuthorizationStatus?
+    
+    var locationCoordinate: CLLocationCoordinate2D {
+        locationManager.location?.coordinate ?? Constants.defaultLocation.coordination
+    }
     
     var userLocation : UserLocation {
         UserLocation(latitude: self.latitude, longitude: self.longitude)
@@ -29,7 +33,6 @@ class OldLocationManager: NSObject, ObservableObject, CLLocationManagerDelegate 
         super.init()
         locationManager.delegate = self
     }
-    
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {

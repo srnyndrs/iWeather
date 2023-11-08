@@ -8,42 +8,38 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject var weatherViewModel: WeatherViewModel
-    @ObservedObject var forecastViewModel: ForecastViewModel
-    
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var locationHolder: LocationHolder
+    @ObservedObject var weatherViewModel: WeatherViewModel
+    @ObservedObject var forecastViewModel: ForecastViewModel
+    @ObservedObject var locationManager: LocationManager
+    @ObservedObject var weatherService: WeatherService
     
     var body: some View {
-        if weatherViewModel.weatherService.authorizationStatus == .authorizedWhenInUse {
-            TabView {
-                VStack{
-                    WeatherScene(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel)
-                }.tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
-                }
-                VStack {
-                    LocationScene()
-                        .environment(\.managedObjectContext, viewContext)
-                        .environmentObject(locationHolder)
-                }.tabItem {
-                    Image(systemName: "list.bullet")
-                    Text("Locations")
-                }
-                VStack {
-                    MapScene(userLocation: weatherViewModel.weatherService.userLocation, cameraPosition: weatherViewModel.weatherService.userLocation.cameraPosition)
-                }.tabItem {
-                    Image(systemName: "map.fill")
-                    Text("Map")
-                }
-            }.task {
-                await weatherViewModel.refresh()
-                await forecastViewModel.refresh()
+        TabView {
+            VStack{
+                WeatherScene(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel)
+            }.tabItem {
+                Image(systemName: "house.fill")
+                Text("Home")
             }
-        }
-        else {
-            Text("The location is not granted!")
+            VStack {
+                LocationScene()
+                    .environment(\.managedObjectContext, viewContext)
+                    .environmentObject(locationHolder)
+            }.tabItem {
+                Image(systemName: "list.bullet")
+                Text("Locations")
+            }
+            VStack {
+                MapScene(userLocation: locationManager.userLocation, cameraPosition: locationManager.userLocation.cameraPosition)
+            }.tabItem {
+                Image(systemName: "map.fill")
+                Text("Map")
+            }
+        }.task {
+            await weatherViewModel.refresh()
+            await forecastViewModel.refresh()
         }
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 import CoreLocation
 
 class WeatherViewModel: ObservableObject {
+    var location: CLLocationCoordinate2D
     @Published var cityName: String = "City Name"
     @Published var temperature: String = "--"
     @Published var weatherDescription: String = "--"
@@ -17,12 +18,13 @@ class WeatherViewModel: ObservableObject {
     
     public let weatherService: WeatherService
     
-    public init(weatherService: WeatherService) {
+    public init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
         self.weatherService = weatherService
+        self.location = location
     }
     
     public func refresh() async {
-        await weatherService.loadWeatherData() { weather in
+        await weatherService.populateWeatherData(coords: location) { weather in
              DispatchQueue.main.async {
                 self.cityName = weather.city
                 self.temperature = "\(weather.temperature)"
