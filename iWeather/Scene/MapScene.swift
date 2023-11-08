@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapScene: View {
+    @ObservedObject var locationViewModel: LocationViewModel
     @State var userLocation: UserLocation
     @State var cameraPosition: MapCameraPosition
     @State private var searchText = ""
@@ -18,10 +19,14 @@ struct MapScene: View {
     
     var body: some View {
         Map(position: $cameraPosition, selection: $selection) {
-            UserAnnotation()            
+            UserAnnotation()
             ForEach(results, id: \.self) { item in
                 let placemark = item.placemark
                 Marker(placemark.name ?? "", coordinate: placemark.coordinate)
+            }
+            ForEach(locationViewModel.locations) { location in
+                let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
+                Marker(location.name ?? "", coordinate: placemark.coordinate)
             }
             
         }

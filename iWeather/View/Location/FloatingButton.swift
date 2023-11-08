@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct FloatingButton: View {
-    @EnvironmentObject var locationHolder: LocationHolder
+    //@EnvironmentObject var locationHolder: LocationHolder
+    @ObservedObject var locationViewModel: LocationViewModel
+    
     var body: some View {
         Spacer()
         HStack {
-            NavigationLink(destination: LocationEditView(passedLocation: nil).environmentObject(locationHolder))
-            {
+            NavigationLink(destination: LocationEditView(locationViewModel: locationViewModel, passedLocation: nil)){
                 Text("New location")
                     .font(.headline)
             }
@@ -26,8 +27,4 @@ struct FloatingButton: View {
         }
 
     }
-}
-
-#Preview {
-    FloatingButton()
 }

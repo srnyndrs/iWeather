@@ -31,7 +31,7 @@ struct Forecast: Codable, Identifiable {
     let main: MainClass
     let weather: [Weather]
     let clouds: Clouds
-    let wind: Winds
+    let wind: Wind
     let visibility: Int
     let pop: Double
     let sys: System
@@ -48,8 +48,22 @@ struct Forecast: Codable, Identifiable {
 // MARK: - MainClass
 struct MainClass: Codable {
     let temp, feelsLike, tempMin, tempMax: Double
-    let pressure, seaLevel, grndLevel, humidity: Int
+    let pressure, seaLevel: Int
+    let grndLevel, humidity: Int?
     let tempKf: Double
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.temp = try container.decode(Double.self, forKey: .temp)
+        self.feelsLike = try container.decode(Double.self, forKey: .feelsLike)
+        self.tempMin = try container.decode(Double.self, forKey: .tempMin)
+        self.tempMax = try container.decode(Double.self, forKey: .tempMax)
+        self.pressure = try container.decode(Int.self, forKey: .pressure)
+        self.seaLevel = try container.decode(Int.self, forKey: .seaLevel)
+        self.grndLevel = try container.decodeIfPresent(Int.self, forKey: .grndLevel)
+        self.humidity = try container.decodeIfPresent(Int.self, forKey: .humidity)
+        self.tempKf = try container.decode(Double.self, forKey: .tempKf)
+    }
 
     enum CodingKeys: String, CodingKey {
         case temp
@@ -81,11 +95,4 @@ struct System: Codable {
 enum Pod: String, Codable {
     case d = "d"
     case n = "n"
-}
-
-// MARK: - Winds
-struct Winds: Codable {
-    let speed: Double
-    let deg: Int
-    let gust: Double
 }

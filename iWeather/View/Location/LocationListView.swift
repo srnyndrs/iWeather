@@ -11,29 +11,29 @@ import CoreLocation
 
 struct LocationListView: View {
     @ObservedObject var weatherService: WeatherService
-    @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var locationHolder: LocationHolder
+    @ObservedObject var locationViewModel: LocationViewModel
+    //@Environment(\.managedObjectContext) private var viewContext
+    //@EnvironmentObject var locationHolder: LocationHolder
 
-    @FetchRequest(
+    /*@FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Location.name, ascending: true)],
         animation: .default
     )
-    private var items: FetchedResults<Location>
+    private var items: FetchedResults<Location>*/
 
     var body: some View {
         NavigationView {
             VStack {
                 ZStack {
                     List {
-                        ForEach(items) { item in
+                        ForEach(locationViewModel.locations) { item in
                             /*NavigationLink(destination: LocationEditView(passedLocation: item).environmentObject(locationHolder)) {
                                 Text(item.name ?? "")
                             }*/
-                            let viewModel = WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
-                            NavigationLink(destination: LocationDetailView(viewModel: viewModel).environmentObject(locationHolder)) {
-                                WeatherCardView(weatherViewModel: viewModel).task {
-                                    await viewModel.refresh()
-                                }
+                            let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                            let foreCastViewModel = ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                            NavigationLink(destination: WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: foreCastViewModel)) {
+                                WeatherListItem(weatherViewModel: weatherViewModel)
                             }
                         }
                         .onDelete(perform: deleteItems)
@@ -43,8 +43,7 @@ struct LocationListView: View {
                             EditButton()
                         }
                     }
-                    FloatingButton()
-                        .environmentObject(locationHolder)
+                    FloatingButton(locationViewModel: locationViewModel)
                 }
             }.navigationTitle("Locations")
         }
@@ -52,8 +51,9 @@ struct LocationListView: View {
     
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-            locationHolder.saveContext(viewContext)
+            locationViewModel.deleteLocation(indexSet: offsets)
+            //offsets.map { items[$0] }.forEach(viewContext.delete)
+            //locationHolder.saveContext(viewContext)
         }
     }
 }

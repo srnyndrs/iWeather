@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var locationHolder: LocationHolder
+    //@Environment(\.managedObjectContext) private var viewContext
+    //@EnvironmentObject var locationHolder: LocationHolder
     @ObservedObject var weatherViewModel: WeatherViewModel
     @ObservedObject var forecastViewModel: ForecastViewModel
+    @ObservedObject var locationViewModel: LocationViewModel
     @ObservedObject var locationManager: LocationManager
     @ObservedObject var weatherService: WeatherService
     
@@ -24,23 +25,17 @@ struct MainView: View {
                 Text("Home")
             }
             VStack {
-                let locationViewModel = LocationListViewModel()
-                LocationScene(weatherService: weatherService)
-                    .environment(\.managedObjectContext, viewContext)
-                    .environmentObject(locationHolder)
+                LocationScene(weatherService: weatherService, locationViewModel: locationViewModel)
             }.tabItem {
                 Image(systemName: "list.bullet")
                 Text("Locations")
             }
             VStack {
-                MapScene(userLocation: locationManager.userLocation, cameraPosition: locationManager.userLocation.cameraPosition)
+                MapScene(locationViewModel: locationViewModel, userLocation: locationManager.userLocation, cameraPosition: locationManager.userLocation.cameraPosition)
             }.tabItem {
                 Image(systemName: "map.fill")
                 Text("Map")
             }
-        }.task {
-            await weatherViewModel.refresh()
-            await forecastViewModel.refresh()
         }
     }
 }

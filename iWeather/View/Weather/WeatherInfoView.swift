@@ -8,19 +8,26 @@
 import SwiftUI
 
 struct WeatherInfoView: View {
-    @ObservedObject var weatherViewModel: WeatherViewModel
+    var cityName: String
+    var temperature: String
+    var weatherIcon: String
+    var weatherDescription: String
     
     var body: some View {
         VStack(alignment: .center) {
-            Text(weatherViewModel.cityName)
+            Text(cityName)
                 .font(.largeTitle)
-            Text(weatherViewModel.temperature + " C°")
+            Text(temperature + " C°")
                 .font(.system(size: 70))
                 .bold()
-            Text(weatherViewModel.weatherIcon)
+            Text(weatherIcon)
                 .font(.largeTitle)
                 .padding()
-            Text(weatherViewModel.weatherDescription)
+            Text(weatherDescription)
         }.padding()
     }
+}
+
+#Preview {
+    WeatherInfoView(cityName: "Budapest", temperature: "12", weatherIcon: "☀️", weatherDescription: "Sunny")
 }

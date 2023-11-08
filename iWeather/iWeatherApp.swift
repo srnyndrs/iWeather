@@ -18,13 +18,14 @@ struct iWeatherApp: App {
             if locationManager.authorizationStatus == .authorizedWhenInUse {
                 let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: locationManager.locationCoordinate)
                 let forecastViewModel = ForecastViewModel(weatherService: weatherService, location: locationManager.locationCoordinate)
+                let locationViewModel = LocationViewModel(weatherService: weatherService)
                 
-                let context = persistenceController.container.viewContext
-                let locationHolder = LocationHolder(context)
+                //let context = persistenceController.container.viewContext
+                //let locationHolder = LocationHolder(context)
                 
-                MainView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel, locationManager: locationManager, weatherService: weatherService)
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .environmentObject(locationHolder)
+                MainView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel, locationViewModel: locationViewModel, locationManager: locationManager, weatherService: weatherService)
+                    //.environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    //.environmentObject(locationHolder)
             } else {
                 Text("The location is not granted!")
             }

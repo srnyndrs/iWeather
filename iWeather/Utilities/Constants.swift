@@ -24,5 +24,16 @@ struct Constants {
     )
     
     static let MockUserRegion = Constants.MockUserLocation.cameraPosition
-
+    
+    static let defaultIcon = "❓"
+    static let iconMap = [
+        "Drizzle" : "🌧️",
+        "Thunderstorm" : "⛈️",
+        "Rain" : "🌧️",
+        "Snow" : "❄️",
+        "Clear" : "☀️",
+        "Clouds" : "☁️",
+        "Mist" : "🌫️",
+        "Default": "❓"
+    ]
 }

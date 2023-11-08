@@ -14,34 +14,29 @@ class WeatherViewModel: ObservableObject {
     @Published var cityName: String = "City Name"
     @Published var temperature: String = "--"
     @Published var weatherDescription: String = "--"
-    @Published var weatherIcon: String = defaultIcon
+    @Published var weatherIcon: String = Constants.defaultIcon
+    private var loaded: Bool
     
     public let weatherService: WeatherService
     
     public init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
         self.weatherService = weatherService
         self.location = location
+        self.loaded = false
     }
     
     public func refresh() async {
-        await weatherService.populateWeatherData(coords: location) { weather in
-             DispatchQueue.main.async {
-                self.cityName = weather.city
-                self.temperature = "\(weather.temperature)"
-                self.weatherDescription = weather.description.capitalized
-                self.weatherIcon = iconMap[weather.iconName] ?? defaultIcon
+        if !loaded {
+            await weatherService.populateWeatherData(coords: location) { weather in
+                DispatchQueue.main.async {
+                    self.cityName = weather.city
+                    self.temperature = "\(weather.temperature)"
+                    self.weatherDescription = weather.description.capitalized
+                    self.weatherIcon = Constants.iconMap[weather.iconName] ?? Constants.defaultIcon
+                    self.loaded = true
+                }
             }
         }
     }
 }
 
-private let defaultIcon = "❓"
-
-private let iconMap = [
-    "Drizzle" : "🌧️",
-    "Thunderstorm" : "⛈️",
-    "Rain" : "🌧️",
-    "Snow" : "❄️",
-    "Clear" : "☀️",
-    "Clouds" : "☁️",
-]

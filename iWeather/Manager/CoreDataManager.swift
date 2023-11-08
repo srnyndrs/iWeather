@@ -29,7 +29,6 @@ class CoreDataManager {
         }
     }
     
-    // save the changes on your context to the persistent store
     func saveContext() {
         do {
             try viewContext.save()
@@ -39,7 +38,6 @@ class CoreDataManager {
         }
     }
     
-    // fetch all the goals data from Goals Entity using NSFetchRequest
     func getAllLocation() -> [Location] {
         let request = NSFetchRequest<Location>(entityName: "Location")
 
@@ -50,9 +48,6 @@ class CoreDataManager {
         }
     }
 
-    // add new goal by creating a new variable and set the Goals context
-    // to our viewcontext, assign the data and don't forget to save the
-    // changes using saveContext function
     func addLocation(name: String, lat: Double, lon: Double) {
         let newLocation = Location(context: viewContext)
         newLocation.name = name
@@ -61,7 +56,6 @@ class CoreDataManager {
         saveContext()
     }
 
-    // delete the goals based on the selected goal you want to delete
     func deleteLocation(location: Location) {
         viewContext.delete(location)
         saveContext()

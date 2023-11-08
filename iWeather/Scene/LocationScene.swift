@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct LocationScene: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var locationHolder: LocationHolder
+    //@Environment(\.managedObjectContext) private var viewContext
+    //@EnvironmentObject var locationHolder: LocationHolder
     @ObservedObject var weatherService: WeatherService
+    @ObservedObject var locationViewModel: LocationViewModel
     
     var body: some View {
-        LocationListView(weatherService: weatherService)
-            .environment(\.managedObjectContext, viewContext)
-            .environmentObject(locationHolder)
+        LocationListView(weatherService: weatherService, locationViewModel: locationViewModel)
+            //.environment(\.managedObjectContext, viewContext)
+            //.environmentObject(locationHolder)
     }
 }

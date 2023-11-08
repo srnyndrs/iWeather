@@ -49,9 +49,19 @@ struct Main: Codable {
 
 // MARK: - Sys
 struct Sys: Codable {
-    let type, id: Int
+    let type: Int?
+    let id: Int?
     let country: String
     let sunrise, sunset: Int
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.type = try container.decodeIfPresent(Int.self, forKey: .type)
+        self.id = try container.decodeIfPresent(Int.self, forKey: .id)
+        self.country = try container.decode(String.self, forKey: .country)
+        self.sunrise = try container.decode(Int.self, forKey: .sunrise)
+        self.sunset = try container.decode(Int.self, forKey: .sunset)
+    }
 }
 
 // MARK: - Weather
@@ -64,4 +74,12 @@ struct Weather: Codable {
 struct Wind: Codable {
     let speed: Double
     let deg: Int
+    let gust: Double?
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.speed = try container.decode(Double.self, forKey: .speed)
+        self.deg = try container.decode(Int.self, forKey: .deg)
+        self.gust = try container.decodeIfPresent(Double.self, forKey: .gust)
+    }
 }

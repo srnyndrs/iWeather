@@ -16,7 +16,7 @@ struct ForecastCardView: View {
                 .font(.title3)
             Text(formatDate(originalDateString: forecast.dtTxt).last ?? "")
                 .font(.title3)
-            Text(iconMap[forecast.weather.first?.main ?? "Default"] ?? "❓")
+            Text(Constants.iconMap[forecast.weather.first?.main ?? "Default"] ?? "❓")
                 .font(.title3)
                 .padding()
             Text("\(Int(forecast.main.temp)) C°")
@@ -42,13 +42,3 @@ struct ForecastCardView: View {
         }
     }
 }
-
-private let iconMap = [
-    "Drizzle" : "🌧️",
-    "Thunderstorm" : "⛈️",
-    "Rain" : "🌧️",
-    "Snow" : "❄️",
-    "Clear" : "☀️",
-    "Clouds" : "☁️",
-    "Default": "❓"
-]

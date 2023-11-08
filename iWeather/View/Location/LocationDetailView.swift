@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct LocationDetailView: View {
-    @ObservedObject var viewModel: WeatherViewModel
+    @ObservedObject var weatherViewModel: WeatherViewModel
 
     var body: some View {
         VStack {
-            WeatherInfoView(weatherViewModel: viewModel)
+            WeatherInfoView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherDescription: weatherViewModel.weatherDescription)
         }
     }
 }
