@@ -16,8 +16,14 @@ struct iWeatherApp: App {
         WindowGroup {
             let weatherViewModel = WeatherViewModel(weatherService: weatherService)
             let forecastViewModel = ForecastViewModel(weatherService: weatherService)
+            
+            let context = persistenceController.container.viewContext
+            let locationHolder = LocationHolder(context)
+            
             MainView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel)
-                //.environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(locationHolder)
         }
     }
 }
+

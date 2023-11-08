@@ -23,5 +23,5 @@ struct Constants {
     )
     
     static let MockUserRegion = Constants.MockUserLocation.cameraPosition
-    
+
 }

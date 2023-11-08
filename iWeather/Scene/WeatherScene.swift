@@ -12,11 +12,13 @@ struct WeatherScene: View {
     @ObservedObject var forecastViewModel: ForecastViewModel
     
     var body: some View {
-        ScrollView {
-            VStack {
-                WeatherInfoView(weatherViewModel: weatherViewModel)
-                ForecastInfoView(forecastViewModel: forecastViewModel)
-            }
+        VStack(alignment: .center) {
+            Spacer()
+            WeatherInfoView(weatherViewModel: weatherViewModel)
+            Spacer()
+            ForecastInfoView(forecastViewModel: forecastViewModel)
+            Spacer()
         }
     }
+    
 }

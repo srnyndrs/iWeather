@@ -11,6 +11,9 @@ struct MainView: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
     @ObservedObject var forecastViewModel: ForecastViewModel
     
+    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var locationHolder: LocationHolder
+    
     var body: some View {
         if weatherViewModel.weatherService.authorizationStatus == .authorizedWhenInUse {
             TabView {
@@ -22,6 +25,8 @@ struct MainView: View {
                 }
                 VStack {
                     LocationScene()
+                        .environment(\.managedObjectContext, viewContext)
+                        .environmentObject(locationHolder)
                 }.tabItem {
                     Image(systemName: "list.bullet")
                     Text("Locations")

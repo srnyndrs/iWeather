@@ -11,15 +11,13 @@ struct ForecastInfoView: View {
     @ObservedObject var forecastViewModel: ForecastViewModel
     
     var body: some View {
-        VStack {
-            List(forecastViewModel.forecast) { forecast in
-                LazyHStack {
-                    Text("\(forecast.dt)")
-                    Text("\(forecast.main.temp) C°")
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(forecastViewModel.forecast) { forecast in
+                    ForecastCardView(forecast: forecast)
+                    Spacer()
                 }
             }
-        }
-        .padding()
-        .background(Color.blue)
+        }.frame(height: 100)
     }
 }

@@ -11,7 +11,7 @@ struct WeatherInfoView: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             Text(weatherViewModel.cityName)
                 .font(.largeTitle)
             Text(weatherViewModel.temperature + " C°")
@@ -21,7 +21,6 @@ struct WeatherInfoView: View {
                 .font(.largeTitle)
                 .padding()
             Text(weatherViewModel.weatherDescription)
-        }
-            .padding()
+        }.padding()
     }
 }

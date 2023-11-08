@@ -13,14 +13,14 @@ class ForecastViewModel: ObservableObject {
     @Published var cityName: String = "City Name"
     @Published var forecast: [Forecast] = []
     
-    public let weatherService: WeatherService
+    public var weatherService: WeatherService? = nil
     
     public init(weatherService: WeatherService) {
         self.weatherService = weatherService
     }
     
     public func refresh() async {
-        await weatherService.loadForecastData() { forecast in
+        await weatherService!.loadForecastData() { forecast in
              DispatchQueue.main.async {
                  self.cityName = forecast.city
                  self.forecast = forecast.forecastList
@@ -28,14 +28,3 @@ class ForecastViewModel: ObservableObject {
         }
     }
 }
-
-private let defaultIcon = "❓"
-
-private let iconMap = [
-    "Drizzle" : "🌧️",
-    "Thunderstorm" : "⛈️",
-    "Rain" : "🌧️",
-    "Snow" : "❄️",
-    "Clear" : "☀️",
-    "Clouds" : "☁️",
-]
