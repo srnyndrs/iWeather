@@ -30,8 +30,10 @@ struct LocationListView: View {
                             /*NavigationLink(destination: LocationEditView(passedLocation: item).environmentObject(locationHolder)) {
                                 Text(item.name ?? "")
                             }*/
-                            let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
-                            let foreCastViewModel = ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                            //let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                            //let foreCastViewModel = ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                            let weatherViewModel = locationViewModel.getLocationItem(location: item)?.weatherViewModel ?? WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                            let foreCastViewModel = locationViewModel.getLocationItem(location: item)?.forecastViewModel ?? ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
                             NavigationLink(destination: WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: foreCastViewModel)) {
                                 WeatherListItem(weatherViewModel: weatherViewModel)
                             }
@@ -50,10 +52,6 @@ struct LocationListView: View {
     }
     
     private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            locationViewModel.deleteLocation(indexSet: offsets)
-            //offsets.map { items[$0] }.forEach(viewContext.delete)
-            //locationHolder.saveContext(viewContext)
-        }
+        locationViewModel.deleteLocation(indexSet: offsets)
     }
 }

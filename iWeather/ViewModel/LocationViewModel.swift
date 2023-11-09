@@ -7,11 +7,13 @@
 
 import Foundation
 import CoreData
+import MapKit
 
 class LocationViewModel: ObservableObject {
     public var weatherService: WeatherService
     let container: NSPersistentContainer
     @Published var locations: [Location] = []
+    @Published var locationMap: [Location : LocationItem] = [:]
     
     init(weatherService: WeatherService) {
         self.weatherService = weatherService
@@ -26,10 +28,14 @@ class LocationViewModel: ObservableObject {
     }
     
     func fetchLocations() {
+        print("Fetch locations")
         let request = NSFetchRequest<Location>(entityName: "Location")
         
         do {
             locations = try container.viewContext.fetch(request)
+            for location in locations {
+                locationMap.updateValue(LocationItem(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)), forKey: location)
+            }
         } catch let error {
             print(error)
         }
@@ -40,23 +46,38 @@ class LocationViewModel: ObservableObject {
         newLocation.name = name
         newLocation.latitude = lat
         newLocation.longitude = lon
+        locations.append(newLocation)
+        locationMap.updateValue(LocationItem(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: newLocation.latitude, longitude: newLocation.longitude)), forKey: newLocation)
         saveData()
     }
     
     func deleteLocation(indexSet: IndexSet) {
         guard let index = indexSet.first else { return }
         let entity = locations[index]
+        locationMap.removeValue(forKey: entity)
         container.viewContext.delete(entity)
+        locations.remove(at: index)
         saveData()
     }
     
     func saveData() {
         do {
             try container.viewContext.save()
-            fetchLocations()
+            //fetchLocations()
         } catch let error {
             print(error)
         }
     }
     
+    func getLocationItem(location: Location) -> LocationItem? {
+        return locationMap[location]
+    }
+    
+}
+extension Array where Element: Hashable {
+    func difference(from other: [Element]) -> [Element] {
+        let thisSet = Set(self)
+        let otherSet = Set(other)
+        return Array(thisSet.symmetricDifference(otherSet))
+    }
 }
