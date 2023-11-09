@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct LocationDetailsView: View {
+struct MarkerDetailsView: View {
     @Binding var selection: MKMapItem?
     @Binding var show: Bool
     var body: some View {
@@ -40,5 +40,5 @@ struct LocationDetailsView: View {
 }
 
 #Preview {
-    LocationDetailsView(selection: .constant(MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: Constants.defaultLocation.latitude, longitude: Constants.defaultLocation.longitude)))), show: .constant(false))
+    MarkerDetailsView(selection: .constant(MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: Constants.defaultLocation.latitude, longitude: Constants.defaultLocation.longitude)))), show: .constant(false))
 }

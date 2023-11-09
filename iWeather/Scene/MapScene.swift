@@ -48,7 +48,7 @@ struct MapScene: View {
             showDetails = newValue != nil
         })
         .sheet(isPresented: $showDetails, content: {
-            LocationDetailsView(selection: $selection, show: $showDetails)
+            MarkerDetailsView(selection: $selection, show: $showDetails)
                 .presentationDetents([.height(150)])
                 .presentationBackgroundInteraction(.enabled(upThrough: .height(150)))
                 .presentationCornerRadius(12)
