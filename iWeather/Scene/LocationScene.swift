@@ -12,9 +12,10 @@ struct LocationScene: View {
     //@EnvironmentObject var locationHolder: LocationHolder
     @ObservedObject var weatherService: WeatherService
     @ObservedObject var locationViewModel: LocationViewModel
+    @ObservedObject var geocodingViewModel: GeocodingViewModel
     
     var body: some View {
-        LocationListView(weatherService: weatherService, locationViewModel: locationViewModel)
+        LocationListView(weatherService: weatherService, locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
             //.environment(\.managedObjectContext, viewContext)
             //.environmentObject(locationHolder)
     }

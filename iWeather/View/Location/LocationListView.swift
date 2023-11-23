@@ -12,6 +12,7 @@ import CoreLocation
 struct LocationListView: View {
     @ObservedObject var weatherService: WeatherService
     @ObservedObject var locationViewModel: LocationViewModel
+    @ObservedObject var geocodingViewModel: GeocodingViewModel
     //@Environment(\.managedObjectContext) private var viewContext
     //@EnvironmentObject var locationHolder: LocationHolder
 
@@ -45,7 +46,7 @@ struct LocationListView: View {
                             EditButton()
                         }
                     }
-                    FloatingButton(locationViewModel: locationViewModel)
+                    FloatingButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
                 }
             }.navigationTitle("Locations")
         }

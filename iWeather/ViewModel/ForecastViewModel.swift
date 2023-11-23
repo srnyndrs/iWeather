@@ -15,7 +15,7 @@ class ForecastViewModel: ObservableObject {
     @Published var forecast: [Forecast] = []
     private var loaded: Bool
     
-    public var weatherService: WeatherService? = nil
+    public let weatherService: WeatherService
     
     public init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
         self.weatherService = weatherService
@@ -25,7 +25,7 @@ class ForecastViewModel: ObservableObject {
     
     public func refresh() async {
         if !loaded {
-            await weatherService!.populateForecastData(coords: location) { forecast in
+            await weatherService.populateForecastData(coords: location) { forecast in
                 DispatchQueue.main.async {
                     self.cityName = forecast.city
                     self.forecast = forecast.forecastList

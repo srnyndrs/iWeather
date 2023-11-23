@@ -10,11 +10,12 @@ import SwiftUI
 struct FloatingButton: View {
     //@EnvironmentObject var locationHolder: LocationHolder
     @ObservedObject var locationViewModel: LocationViewModel
+    @ObservedObject var geocodingViewModel: GeocodingViewModel
     
     var body: some View {
         Spacer()
         HStack {
-            NavigationLink(destination: LocationEditView(locationViewModel: locationViewModel, passedLocation: nil)){
+            NavigationLink(destination: LocationEditView(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel, passedLocation: nil)){
                 Text("New location")
                     .font(.headline)
             }

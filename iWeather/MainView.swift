@@ -13,6 +13,7 @@ struct MainView: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
     @ObservedObject var forecastViewModel: ForecastViewModel
     @ObservedObject var locationViewModel: LocationViewModel
+    @ObservedObject var geocodingViewModel: GeocodingViewModel
     @ObservedObject var locationManager: LocationManager
     @ObservedObject var weatherService: WeatherService
     
@@ -25,7 +26,7 @@ struct MainView: View {
                 Text("Home")
             }
             VStack {
-                LocationScene(weatherService: weatherService, locationViewModel: locationViewModel)
+                LocationScene(weatherService: weatherService, locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
             }.tabItem {
                 Image(systemName: "list.bullet")
                 Text("Locations")

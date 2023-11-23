@@ -12,6 +12,8 @@ struct LocationEditView: View {
     /*@Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var locationHolder: LocationHolder*/
     @ObservedObject var locationViewModel: LocationViewModel
+    @ObservedObject var geocodingViewModel: GeocodingViewModel
+    @State private var searchText = ""
     @State var selectedLocation: Location?
     @State var name: String
     @State var latitudeText: String
@@ -35,8 +37,9 @@ struct LocationEditView: View {
         }
     }
     
-    init(locationViewModel: LocationViewModel, passedLocation: Location?) {
+    init(locationViewModel: LocationViewModel, geocodingViewModel: GeocodingViewModel, passedLocation: Location?) {
         self.locationViewModel = locationViewModel
+        self.geocodingViewModel = geocodingViewModel
         _latValidation = State(initialValue: false)
         _lonValidation = State(initialValue: false)
         if let item = passedLocation {
@@ -52,32 +55,59 @@ struct LocationEditView: View {
     }
     
     var body: some View {
-        Form {
-            Section(header: Text("Location")) {
-                TextField("Name", text: $name)
-                TextField("Latitude", text: $latitudeText)
-                    .onChange(of: latitudeText) { oldValue, newValue in
+        VStack {
+            Form {
+                Section(header: Text("Location")) {
+                    TextField("Name", text: $name)
+                    TextField("Latitude", text: $latitudeText)
+                        .onChange(of: latitudeText) { oldValue, newValue in
                             if Double(newValue) == nil {
                                 latValidation = true
                             } else {
                                 latValidation = false
                             }
                         }
-                    .keyboardType(.numbersAndPunctuation)
-                TextField("Longitude", text: $longitudeText)
-                    .onChange(of: longitudeText) { oldValue, newValue in
-                        if Double(newValue) == nil {
-                            lonValidation = true
-                        } else {
-                            lonValidation = false
+                        .keyboardType(.numbersAndPunctuation)
+                    TextField("Longitude", text: $longitudeText)
+                        .onChange(of: longitudeText) { oldValue, newValue in
+                            if Double(newValue) == nil {
+                                lonValidation = true
+                            } else {
+                                lonValidation = false
+                            }
                         }
-                    }
-                    .keyboardType(.numbersAndPunctuation)
-                Button("Save", action: saveAction)
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .disabled(latValidation || lonValidation)
+                        .keyboardType(.numbersAndPunctuation)
+                    Button("Save", action: saveAction)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .disabled(latValidation || lonValidation)
+                }
             }
+            VStack {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    TextField("Search", text: $geocodingViewModel.searchText)
+                        .font(.subheadline)
+                }
+                .padding(12)
+                .background(.white)
+                .padding()
+                .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                .onSubmit(of: .text){
+                    Task { self.geocodingViewModel.fetchData() }
+                }
+                List(geocodingViewModel.results, id: \.address) { data in
+                    Text("\(data.address)")
+                        .onTapGesture {
+                            self.name = data.city
+                            self.latitudeText = "\(data.latitude)"
+                            self.longitudeText = "\(data.longitude)"
+                        }
+                }
+            }.onAppear {
+                self.geocodingViewModel.fetchData()
+            }
+            Spacer()
         }
     }
     
