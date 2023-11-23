@@ -7,10 +7,11 @@
 
 import Foundation
 import MapKit
+import SwiftUI
 
-class LocationItem {
-    var weatherViewModel: WeatherViewModel
-    var forecastViewModel: ForecastViewModel
+class LocationItem: ObservableObject {
+    @Published var weatherViewModel: WeatherViewModel
+    @Published var forecastViewModel: ForecastViewModel
     
     init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
         self.weatherViewModel = WeatherViewModel(weatherService: weatherService, location: location)

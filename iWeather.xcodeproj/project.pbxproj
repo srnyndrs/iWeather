@@ -12,6 +12,7 @@
 		3693317D2B0F46DE005B00EF /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3693317C2B0F46DE005B00EF /* LocationData.swift */; };
 		3693317F2B0F4837005B00EF /* GeocodingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3693317E2B0F4837005B00EF /* GeocodingViewModel.swift */; };
 		369331812B0F4871005B00EF /* GeocodingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369331802B0F4871005B00EF /* GeocodingService.swift */; };
+		369331832B0F720B005B00EF /* WeatherMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369331822B0F720B005B00EF /* WeatherMarker.swift */; };
 		369359DD2AFAEEBC002678DD /* ForecastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369359DC2AFAEEBC002678DD /* ForecastResponse.swift */; };
 		369359DF2AFAF26D002678DD /* ForecastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369359DE2AFAF26D002678DD /* ForecastData.swift */; };
 		369359E12AFAF3CF002678DD /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369359E02AFAF3CF002678DD /* ForecastViewModel.swift */; };
@@ -52,6 +53,7 @@
 		3693317C2B0F46DE005B00EF /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		3693317E2B0F4837005B00EF /* GeocodingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingViewModel.swift; sourceTree = "<group>"; };
 		369331802B0F4871005B00EF /* GeocodingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingService.swift; sourceTree = "<group>"; };
+		369331822B0F720B005B00EF /* WeatherMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMarker.swift; sourceTree = "<group>"; };
 		369359DC2AFAEEBC002678DD /* ForecastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastResponse.swift; sourceTree = "<group>"; };
 		369359DE2AFAF26D002678DD /* ForecastData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastData.swift; sourceTree = "<group>"; };
 		369359E02AFAF3CF002678DD /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				369624252AF6C3F0009D2D1E /* MarkerDetailsView.swift */,
+				369331822B0F720B005B00EF /* WeatherMarker.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				369624282AF6C96D009D2D1E /* MainView.swift in Sources */,
 				369359DF2AFAF26D002678DD /* ForecastData.swift in Sources */,
 				369624122AF6B918009D2D1E /* LocationListView.swift in Sources */,
+				369331832B0F720B005B00EF /* WeatherMarker.swift in Sources */,
 				36982AC32AFA7A4D00B89D53 /* WeatherInfoView.swift in Sources */,
 				3696241C2AF6B91C009D2D1E /* iWeather.xcdatamodeld in Sources */,
 				3693317D2B0F46DE005B00EF /* LocationData.swift in Sources */,
