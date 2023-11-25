@@ -17,6 +17,9 @@ class WeatherViewModel: ObservableObject {
     @Published var weatherIcon: String = ""
     @Published var weatherIconImage: String = ""
     @Published var wind: String = ""
+    @Published var humidity: String = ""
+    @Published var sunrise: String = ""
+    @Published var sunset: String = ""
     private var loaded: Bool
     
     public let weatherService: WeatherService
@@ -37,6 +40,9 @@ class WeatherViewModel: ObservableObject {
                     self.weatherIcon = Constants.iconMap[weather.iconName] ?? Constants.defaultIcon
                     self.weatherIconImage = weather.weatherIconUrl
                     self.wind = weather.wind
+                    self.humidity = weather.humidity
+                    self.sunrise = weather.sunrise
+                    self.sunset = weather.sunset
                     self.loaded = true
                 }
             }

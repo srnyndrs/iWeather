@@ -9,16 +9,17 @@ import SwiftUI
 
 struct ForecastInfoView: View {
     var forecast: [Forecast]
+    var timezone: Int
     
     var body: some View {
-        VStack {
+        LazyVStack {
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
+                LazyHStack {
                     ForEach(forecast) { forecast in
-                        ForecastCardView(forecast: forecast)
+                        ForecastCardView(forecast: forecast, timezone: timezone)
                     }
                 }
-            }.frame(height: 100).padding(.horizontal, 6)
+            }.frame(maxHeight: 150).padding(.horizontal, 6)
         }
     }
 }

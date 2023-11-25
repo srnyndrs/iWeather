@@ -12,17 +12,34 @@ struct WeatherMarker: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
-                .fill(.cyan)
+                .fill(LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing))
                 .stroke(.secondary, lineWidth: 1)
                 .foregroundColor(.black)
             VStack(alignment: .center, spacing: 0) {
-                Text(weatherViewModel.weatherIcon)
-                    .font(.title)
+                //Text(weatherViewModel.weatherIcon).font(.title)
+                AsyncImage(url: URL(string: weatherViewModel.weatherIconImage)) { phase in
+                    switch phase {
+                    case .empty:
+                        Image(systemName: "photo")
+                            .frame(width: 50, height: 50)
+                    case .success(let image):
+                        image.resizable()
+                            .clipped()
+                            .frame(maxWidth: 50, maxHeight: 50)
+                    case .failure:
+                        Text(Constants.iconMap[weatherViewModel.weatherIcon ] ?? "❓")
+                            .frame(width: 50, height: 50)
+                    @unknown default:
+                        EmptyView()
+                            .frame(width: 50, height: 50)
+                    }
+                }
+                .frame(width: 50, height: 50)
                 Text(" \(weatherViewModel.temperature)°C")
                     .font(.footnote)
                     .foregroundColor(.white)
-            }
-        }
+            }.padding(2)
+        }.frame(width: 20, height: 20)
         .task {
             await weatherViewModel.refresh()
         }

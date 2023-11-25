@@ -13,6 +13,7 @@ class ForecastViewModel: ObservableObject {
     var location: CLLocationCoordinate2D
     @Published var cityName: String = "City Name"
     @Published var forecast: [Forecast] = []
+    @Published var timezone: Int = 0
     private var loaded: Bool
     
     public let weatherService: WeatherService
@@ -27,11 +28,13 @@ class ForecastViewModel: ObservableObject {
         if !loaded {
             await weatherService.populateForecastData(coords: location) { forecast in
                 DispatchQueue.main.async {
-                    self.cityName = forecast.city
+                    self.cityName = forecast.cityName
                     self.forecast = forecast.forecastList
+                    self.timezone = forecast.timezone
                     self.loaded = true
                 }
             }
         }
     }
+
 }

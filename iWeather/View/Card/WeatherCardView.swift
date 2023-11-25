@@ -31,7 +31,7 @@ struct WeatherCardView: View {
                             .frame(width: 25, height: 25)
                     case .success(let image):
                         image.resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .clipped()
                             .frame(maxWidth: 25, maxHeight: 25)
                     case .failure:
                         Text(weatherIcon)
