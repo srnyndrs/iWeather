@@ -12,7 +12,7 @@ struct WeatherScene: View {
     @ObservedObject var forecastViewModel: ForecastViewModel
     
     var body: some View {
-        WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel)
+        WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel).padding(.top, 64)
     }
     
 }

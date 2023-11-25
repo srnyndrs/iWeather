@@ -19,11 +19,13 @@ struct MainView: View {
     
     var body: some View {
         TabView {
-            VStack{
+            VStack {
                 WeatherScene(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel)
             }.tabItem {
-                Image(systemName: "house.fill")
-                Text("Home")
+                VStack {
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
             }
             VStack {
                 LocationScene(weatherService: weatherService, locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
@@ -37,6 +39,6 @@ struct MainView: View {
                 Image(systemName: "map.fill")
                 Text("Map")
             }
-        }
+        }.accentColor(.cyan)
     }
 }

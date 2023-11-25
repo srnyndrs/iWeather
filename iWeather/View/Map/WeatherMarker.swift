@@ -12,13 +12,24 @@ struct WeatherMarker: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
-                .fill(.background)
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(.secondary, lineWidth: 5)
-            Text(weatherViewModel.weatherIcon)
-                .padding(8)
-        }.task {
+                .fill(.cyan)
+                .stroke(.secondary, lineWidth: 1)
+                .foregroundColor(.black)
+            VStack(alignment: .center, spacing: 0) {
+                Text(weatherViewModel.weatherIcon)
+                    .font(.title)
+                Text(" \(weatherViewModel.temperature)°C")
+                    .font(.footnote)
+                    .foregroundColor(.white)
+            }
+        }
+        .task {
             await weatherViewModel.refresh()
         }
     }
+}
+
+
+#Preview {
+    WeatherMarker(weatherViewModel: WeatherViewModel(weatherService: WeatherService(), location: Constants.MockUserLocation.coordinate))
 }

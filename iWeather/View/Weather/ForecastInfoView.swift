@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct ForecastInfoView: View {
-    //@ObservedObject var forecastViewModel: ForecastViewModel
     var forecast: [Forecast]
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(forecast) { forecast in
-                    ForecastCardView(forecast: forecast)
-                    Spacer()
+        VStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(forecast) { forecast in
+                        ForecastCardView(forecast: forecast)
+                    }
                 }
-            }
-        }.frame(height: 100)
+            }.frame(height: 100).padding(.horizontal, 6)
+        }
     }
 }

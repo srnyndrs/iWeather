@@ -15,9 +15,10 @@ struct LocationEditView: View {
     @ObservedObject var geocodingViewModel: GeocodingViewModel
     @State private var searchText = ""
     @State var selectedLocation: Location?
-    @State var name: String
+    @State var nameText: String
     @State var latitudeText: String
     @State var longitudeText: String
+    @State var nameValidation: Bool
     @State var latValidation: Bool
     @State var lonValidation: Bool
     
@@ -40,25 +41,49 @@ struct LocationEditView: View {
     init(locationViewModel: LocationViewModel, geocodingViewModel: GeocodingViewModel, passedLocation: Location?) {
         self.locationViewModel = locationViewModel
         self.geocodingViewModel = geocodingViewModel
-        _latValidation = State(initialValue: false)
-        _lonValidation = State(initialValue: false)
+        _nameValidation = State(initialValue: true)
+        _latValidation = State(initialValue: true)
+        _lonValidation = State(initialValue: true)
         if let item = passedLocation {
             _selectedLocation = State(initialValue: item)
-            _name = State(initialValue: item.name ?? "")
+            _nameText = State(initialValue: item.name ?? "")
             _latitudeText = State(initialValue: "\(item.latitude)" )
             _longitudeText = State(initialValue: "\(item.longitude)" )
         } else {
-            _name = State(initialValue: "")
-            _latitudeText = State(initialValue: "0")
-            _longitudeText = State(initialValue: "0")
+            _nameText = State(initialValue: "")
+            _latitudeText = State(initialValue: "")
+            _longitudeText = State(initialValue: "")
         }
     }
     
     var body: some View {
         VStack {
             Form {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                    TextField("Search for a city", text: $geocodingViewModel.searchText)
+                        .font(.subheadline)
+                    Image(systemName: "arrow.counterclockwise")
+                        .onTapGesture {
+                            geocodingViewModel.searchText = ""
+                            self.nameText = ""
+                            self.latitudeText = ""
+                            self.longitudeText = ""
+                            geocodingViewModel.fetchData()
+                        }
+                }
+                .onSubmit(of: .text){
+                    Task { self.geocodingViewModel.fetchData() }
+                }
                 Section(header: Text("Location")) {
-                    TextField("Name", text: $name)
+                    TextField("Name", text: $nameText)
+                        .onChange(of: nameText) { oldValue, newValue in
+                            if newValue.isEmpty {
+                                nameValidation = true
+                            } else {
+                                nameValidation = false
+                            }
+                        }
                     TextField("Latitude", text: $latitudeText)
                         .onChange(of: latitudeText) { oldValue, newValue in
                             if Double(newValue) == nil {
@@ -80,32 +105,20 @@ struct LocationEditView: View {
                     Button("Save", action: saveAction)
                         .font(.headline)
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .disabled(latValidation || lonValidation)
+                        .disabled(nameValidation || latValidation || lonValidation)
                 }
-            }
-            VStack {
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                    TextField("Search", text: $geocodingViewModel.searchText)
-                        .font(.subheadline)
+                Section(header: Text("Search results")) {
+                    List(geocodingViewModel.results, id: \.address) { data in
+                        Text("\(data.address)")
+                            .onTapGesture {
+                                self.nameText = data.city
+                                self.latitudeText = "\(data.latitude)"
+                                self.longitudeText = "\(data.longitude)"
+                            }
+                    }.onAppear {
+                        self.geocodingViewModel.fetchData()
+                    }
                 }
-                .padding(12)
-                .background(.white)
-                .padding()
-                .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-                .onSubmit(of: .text){
-                    Task { self.geocodingViewModel.fetchData() }
-                }
-                List(geocodingViewModel.results, id: \.address) { data in
-                    Text("\(data.address)")
-                        .onTapGesture {
-                            self.name = data.city
-                            self.latitudeText = "\(data.latitude)"
-                            self.longitudeText = "\(data.longitude)"
-                        }
-                }
-            }.onAppear {
-                self.geocodingViewModel.fetchData()
             }
             Spacer()
         }
@@ -126,7 +139,7 @@ struct LocationEditView: View {
             return
         }
         
-        locationViewModel.addLocation(name: name, lat: latitude!, lon: longitude!)
+        locationViewModel.addLocation(name: nameText, lat: latitude!, lon: longitude!)
         //locationHolder.saveContext(viewContext)
         self.presentationMode.wrappedValue.dismiss()
     }

@@ -11,17 +11,41 @@ struct ForecastCardView: View {
     var forecast: Forecast
     
     var body: some View {
-        VStack(alignment: .center) {
-            Text(formatDate(originalDateString: forecast.dtTxt).first ?? "")
-                .font(.title3)
-            Text(formatDate(originalDateString: forecast.dtTxt).last ?? "")
-                .font(.title3)
-            Text(Constants.iconMap[forecast.weather.first?.main ?? "Default"] ?? "❓")
-                .font(.title3)
-                .padding()
-            Text("\(Int(forecast.main.temp)) C°")
-                .bold()
-        }.frame(maxHeight: 200).padding()
+        ZStack {
+            RoundedRectangle(cornerRadius: 5)
+                .fill(LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                .stroke(.black)
+            VStack(alignment: .center) {
+                Text(formatDate(originalDateString: forecast.dtTxt).first ?? "")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .bold()
+                Text(formatDate(originalDateString: forecast.dtTxt).last ?? "")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(forecast.weather.first?.icon ?? "")@2x.png")) { phase in
+                    switch phase {
+                    case .empty:
+                        Image(systemName: "photo")
+                            .frame(width: 50, height: 50)
+                    case .success(let image):
+                        image.resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: 50, maxHeight: 50)
+                    case .failure:
+                        Text(Constants.iconMap[forecast.weather.first?.main ?? "Default"] ?? "❓")
+                            .frame(width: 50, height: 50)
+                    @unknown default:
+                        EmptyView()
+                            .frame(width: 50, height: 50)
+                    }
+                }
+                .frame(width: 50, height: 50)
+                Text("\(Int(forecast.main.temp))°C")
+                    .foregroundColor(.white)
+                    .bold()
+            }
+        }.frame(width: 100, height: 180).padding(.horizontal, 10)
     }
     
     func formatDate(originalDateString: String) -> [String]! {

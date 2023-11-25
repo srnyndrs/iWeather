@@ -21,7 +21,7 @@ struct MarkerDetailsView: View {
                     Text(selection?.placemark.title ?? "")
                         .font(.footnote)
                         .foregroundStyle(.gray)
-                        .lineLimit(/*@START_MENU_TOKEN@*/2/*@END_MENU_TOKEN@*/)
+                        .lineLimit(2)
                         .padding(.trailing)
                 }
                 Spacer()

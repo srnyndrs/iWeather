@@ -11,10 +11,12 @@ import CoreLocation
 
 class WeatherViewModel: ObservableObject {
     var location: CLLocationCoordinate2D
-    @Published var cityName: String = "City Name"
-    @Published var temperature: String = "--"
-    @Published var weatherDescription: String = "--"
-    @Published var weatherIcon: String = Constants.defaultIcon
+    @Published var cityName: String = ""
+    @Published var temperature: String = ""
+    @Published var weatherDescription: String = ""
+    @Published var weatherIcon: String = ""
+    @Published var weatherIconImage: String = ""
+    @Published var wind: String = ""
     private var loaded: Bool
     
     public let weatherService: WeatherService
@@ -33,6 +35,8 @@ class WeatherViewModel: ObservableObject {
                     self.temperature = "\(weather.temperature)"
                     self.weatherDescription = weather.description.capitalized
                     self.weatherIcon = Constants.iconMap[weather.iconName] ?? Constants.defaultIcon
+                    self.weatherIconImage = weather.weatherIconUrl
+                    self.wind = weather.wind
                     self.loaded = true
                 }
             }

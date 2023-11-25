@@ -12,7 +12,7 @@ struct LocationDetailView: View {
 
     var body: some View {
         VStack {
-            WeatherInfoView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherDescription: weatherViewModel.weatherDescription)
+            WeatherInfoView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
         }
     }
 }

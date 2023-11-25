@@ -42,11 +42,13 @@ struct LocationListView: View {
                         .onDelete(perform: deleteItems)
                     }
                     .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
+                        ToolbarItemGroup(placement: .navigationBarTrailing) {
+                            FloatingButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
+                            Spacer()
                             EditButton()
                         }
                     }
-                    FloatingButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
+                    //FloatingButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
                 }
             }.navigationTitle("Locations")
         }

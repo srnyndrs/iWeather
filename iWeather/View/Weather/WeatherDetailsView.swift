@@ -13,12 +13,14 @@ struct WeatherDetailsView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Spacer()
-            WeatherInfoView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherDescription: weatherViewModel.weatherDescription)
+            WeatherInfoView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
             Spacer()
             ForecastInfoView(forecast: forecastViewModel.forecast)
             Spacer()
-        }.task {
+            AdditionalInfoView(wind: weatherViewModel.wind)
+            Spacer()
+        }
+        .task {
             print("Refresh details view")
             await weatherViewModel.refresh()
             await forecastViewModel.refresh()

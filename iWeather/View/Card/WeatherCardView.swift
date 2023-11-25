@@ -11,6 +11,7 @@ struct WeatherCardView: View {
     var cityName: String
     var temperature: String
     var weatherIcon: String
+    var weatherIconId: String
     var weatherDescription: String
     
     var body: some View {
@@ -19,12 +20,27 @@ struct WeatherCardView: View {
             Text(cityName)
                 .font(.system(size: 12))
             Spacer()
-            Text(temperature + " C°")
+            Text(temperature + "°C")
                 .font(.system(size: 12))
                 .bold()
             Spacer()
-            Text(weatherIcon)
-                .font(.system(size: 20))
+            AsyncImage(url: URL(string: weatherIconId)) { phase in
+                switch phase {
+                    case .empty:
+                        Image(systemName: "photo")
+                            .frame(width: 25, height: 25)
+                    case .success(let image):
+                        image.resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: 25, maxHeight: 25)
+                    case .failure:
+                        Text(weatherIcon)
+                            .frame(width: 25, height: 25)
+                    @unknown default:
+                        EmptyView()
+                            .frame(width: 25, height: 25)
+                }
+            }.frame(width: 25, height: 25)
             Spacer()
             Text(weatherDescription)
                 .font(.system(size: 12))
@@ -34,5 +50,5 @@ struct WeatherCardView: View {
 }
 
 #Preview {
-    WeatherCardView(cityName: "Budapest", temperature: "12", weatherIcon: "☀️", weatherDescription: "Clear")
+    WeatherCardView(cityName: "Budapest", temperature: "12", weatherIcon: "☀️", weatherIconId: "01d", weatherDescription: "Clear")
 }

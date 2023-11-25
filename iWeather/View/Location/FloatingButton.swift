@@ -13,7 +13,7 @@ struct FloatingButton: View {
     @ObservedObject var geocodingViewModel: GeocodingViewModel
     
     var body: some View {
-        Spacer()
+        /*Spacer()
         HStack {
             NavigationLink(destination: LocationEditView(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel, passedLocation: nil)){
                 Text("New location")
@@ -25,7 +25,9 @@ struct FloatingButton: View {
             .cornerRadius(30)
             .padding(30)
             .shadow(color: .black.opacity(0.3), radius: 3, x: 3, y: 3)
+        }*/
+        NavigationLink(destination: LocationEditView(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel, passedLocation: nil).navigationTitle("New location")){
+            Text("New location")
         }
-
     }
 }
