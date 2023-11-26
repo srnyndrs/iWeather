@@ -40,7 +40,7 @@ struct WeatherInfoView: View {
                             .foregroundColor(.white)
                             .padding(.top, 12)
                     }
-                    AsyncImage(url: URL(string: weatherIconId)) { phase in
+                    /*AsyncImage(url: URL(string: weatherIconId)) { phase in
                         switch phase {
                         case .empty:
                             Image(systemName: "photo")
@@ -57,7 +57,16 @@ struct WeatherInfoView: View {
                             EmptyView()
                                 .frame(width: 100, height: 100)
                         }
-                    }.frame(width: 100, height: 100)
+                    }.frame(width: 100, height: 100)*/
+                    AsyncImage(url: URL(string: weatherIconId)) { image in
+                        image
+                            .resizable()
+                            .clipped()
+                            .scaledToFill()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(width: 100, height: 100)
                 }.padding()
             //}
         }

@@ -31,7 +31,7 @@ struct WeatherDetailsView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     AdditionalInfoView(wind: weatherViewModel.wind, humidity: weatherViewModel.humidity, sunrise: weatherViewModel.sunrise, sunset: weatherViewModel.sunset)
                 }.frame(minHeight: geometry.size.height)
-            }.frame(width: geometry.size.width) //.padding(.top, 64)
+            }.padding(.bottom, 6).frame(width: geometry.size.width) //.padding(.top, 64)
                 .task {
                     print("Refresh details view")
                     await weatherViewModel.refresh()

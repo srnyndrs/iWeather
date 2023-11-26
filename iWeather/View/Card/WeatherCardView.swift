@@ -16,36 +16,54 @@ struct WeatherCardView: View {
     
     var body: some View {
         HStack {
-            Spacer()
-            Text(cityName)
-                .font(.system(size: 12))
-            Spacer()
-            Text(temperature + "°C")
-                .font(.system(size: 12))
-                .bold()
-            Spacer()
-            AsyncImage(url: URL(string: weatherIconId)) { phase in
-                switch phase {
+            VStack {
+                /*AsyncImage(url: URL(string: weatherIconId)) { phase in
+                    switch phase {
                     case .empty:
                         Image(systemName: "photo")
-                            .frame(width: 25, height: 25)
+                            .frame(width: 50, height: 50)
                     case .success(let image):
                         image.resizable()
-                            .clipped()
-                            .frame(maxWidth: 25, maxHeight: 25)
+                            .frame(width: 50, height: 50)
+                            .border(.red)
                     case .failure:
                         Text(weatherIcon)
-                            .frame(width: 25, height: 25)
+                            .font(.largeTitle)
+                            .frame(width: 50, height: 50)
                     @unknown default:
                         EmptyView()
-                            .frame(width: 25, height: 25)
+                            .frame(width: 50, height: 50)
+                    }
+                }.frame(width: 50, height: 50)*/
+                AsyncImage(url: URL(string: weatherIconId)) { image in
+                    image
+                        .resizable()
+                        .clipped()
+                        .scaledToFill()
+                } placeholder: {
+                    ProgressView()
                 }
-            }.frame(width: 25, height: 25)
+                .frame(width: 50, height: 50)
+            }
+            VStack(spacing: 8) {
+                Text(cityName)
+                    .font(.title3)
+                    .bold()
+                    .frame(maxWidth: 150, alignment: .leading)
+                Text(weatherDescription)
+                    .font(.subheadline)
+                    .frame(maxWidth: 150, alignment: .leading)
+            }
             Spacer()
-            Text(weatherDescription)
-                .font(.system(size: 12))
-            Spacer()
-        }
+            VStack {
+                HStack {
+                    Text(temperature + "°C")
+                        .font(.title)
+                        .bold()
+                    
+                }
+            }.padding(.horizontal, 10)
+        }.foregroundColor(.white)
     }
 }
 

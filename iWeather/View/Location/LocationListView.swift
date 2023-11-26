@@ -24,33 +24,36 @@ struct LocationListView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                ZStack {
-                    List {
-                        ForEach(locationViewModel.locations) { item in
-                            /*NavigationLink(destination: LocationEditView(passedLocation: item).environmentObject(locationHolder)) {
-                                Text(item.name ?? "")
-                            }*/
-                            //let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
-                            //let foreCastViewModel = ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
-                            let weatherViewModel = locationViewModel.getLocationItem(location: item)?.weatherViewModel ?? WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
-                            let foreCastViewModel = locationViewModel.getLocationItem(location: item)?.forecastViewModel ?? ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
-                            NavigationLink(destination: WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: foreCastViewModel)) {
-                                WeatherListItem(weatherViewModel: weatherViewModel)
-                            }
-                        }
-                        .onDelete(perform: deleteItems)
-                    }
-                    .toolbar {
-                        ToolbarItemGroup(placement: .navigationBarTrailing) {
-                            FloatingButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
-                            Spacer()
-                            EditButton()
+            List {
+                Section {
+                    ForEach(locationViewModel.locations) { item in
+                        /*NavigationLink(destination: LocationEditView(passedLocation: item).environmentObject(locationHolder)) {
+                         Text(item.name ?? "")
+                         }*/
+                        //let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                        //let foreCastViewModel = ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                        let weatherViewModel = locationViewModel.getLocationItem(location: item)?.weatherViewModel ?? WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                        let foreCastViewModel = locationViewModel.getLocationItem(location: item)?.forecastViewModel ?? ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
+                        NavigationLink(destination: WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: foreCastViewModel)) {
+                            WeatherListItem(weatherViewModel: weatherViewModel)
                         }
                     }
-                    //FloatingButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
+                    .onDelete(perform: deleteItems)
+                }.listRowBackground(
+                    LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                ).listRowSeparator(.visible)
+            }
+            .listStyle(.insetGrouped)
+            .environment(\.horizontalSizeClass, .regular)
+            .navigationTitle("Locations")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    NewButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
                 }
-            }.navigationTitle("Locations")
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+            }
         }
     }
     

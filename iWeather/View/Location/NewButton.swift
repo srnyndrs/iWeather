@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FloatingButton: View {
+struct NewButton: View {
     //@EnvironmentObject var locationHolder: LocationHolder
     @ObservedObject var locationViewModel: LocationViewModel
     @ObservedObject var geocodingViewModel: GeocodingViewModel
@@ -27,7 +27,7 @@ struct FloatingButton: View {
             .shadow(color: .black.opacity(0.3), radius: 3, x: 3, y: 3)
         }*/
         NavigationLink(destination: LocationEditView(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel, passedLocation: nil).navigationTitle("New location")){
-            Text("New location")
+            Text("New")
         }
     }
 }

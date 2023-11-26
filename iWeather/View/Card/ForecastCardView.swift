@@ -21,7 +21,7 @@ struct ForecastCardView: View {
                 Text(formatDate((Int(forecast.dt ?? 0)) + timezone).last ?? "")
                     .font(.headline)
                     .foregroundColor(.white)
-                AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(forecast.weather?.first?.icon ?? "")@2x.png")) { phase in
+                /*AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(forecast.weather?.first?.icon ?? "")@2x.png")) { phase in
                     switch phase {
                     case .empty:
                         Image(systemName: "photo")
@@ -37,6 +37,15 @@ struct ForecastCardView: View {
                         EmptyView()
                             .frame(width: 50, height: 50)
                     }
+                }
+                .frame(width: 50, height: 50)*/
+                AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(forecast.weather?.first?.icon ?? "")@2x.png")) { image in
+                    image
+                        .resizable()
+                        .clipped()
+                        .scaledToFill()
+                } placeholder: {
+                    ProgressView()
                 }
                 .frame(width: 50, height: 50)
                 Text("\(Int(forecast.main?.temp ?? 0))°C")
