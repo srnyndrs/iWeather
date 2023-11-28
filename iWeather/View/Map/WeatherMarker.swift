@@ -17,7 +17,7 @@ struct WeatherMarker: View {
                 .foregroundColor(.black)
             VStack(alignment: .center, spacing: 0) {
                 //Text(weatherViewModel.weatherIcon).font(.title)
-                AsyncImage(url: URL(string: weatherViewModel.weatherIconImage)) { phase in
+                /*AsyncImage(url: URL(string: weatherViewModel.weatherIconImage)) { phase in
                     switch phase {
                     case .empty:
                         Image(systemName: "photo")
@@ -34,7 +34,15 @@ struct WeatherMarker: View {
                             .frame(width: 50, height: 50)
                     }
                 }
-                .frame(width: 50, height: 50)
+                .frame(width: 50, height: 50)*/
+                AsyncImage(url: URL(string: weatherViewModel.weatherIconImage)) { image in
+                    image
+                        .resizable()
+                        .clipped()
+                        .frame(width: 50, height: 50)
+                } placeholder: {
+                    ProgressView().frame(width: 50, height: 50)
+                }
                 Text(" \(weatherViewModel.temperature)°C")
                     .font(.footnote)
                     .foregroundColor(.white)

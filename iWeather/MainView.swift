@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-    //@Environment(\.managedObjectContext) private var viewContext
-    //@EnvironmentObject var locationHolder: LocationHolder
     @ObservedObject var weatherViewModel: WeatherViewModel
     @ObservedObject var forecastViewModel: ForecastViewModel
     @ObservedObject var locationViewModel: LocationViewModel
@@ -30,14 +28,18 @@ struct MainView: View {
             VStack {
                 LocationScene(weatherService: weatherService, locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
             }.tabItem {
-                Image(systemName: "list.bullet")
-                Text("Locations")
+                VStack {
+                    Image(systemName: "list.bullet")
+                    Text("Locations")
+                }
             }
             VStack {
                 MapScene(locationViewModel: locationViewModel, userLocation: locationManager.userLocation, cameraPosition: locationManager.userLocation.cameraPosition)
             }.tabItem {
-                Image(systemName: "map.fill")
-                Text("Map")
+                VStack{
+                    Image(systemName: "map.fill")
+                    Text("Map")
+                }
             }
         }.accentColor(.cyan)
     }

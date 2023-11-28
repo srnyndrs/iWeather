@@ -9,9 +9,10 @@ import SwiftUI
 
 struct WeatherListItem: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
+    var locationName: String?
     var body: some View {
         HStack {
-            WeatherCardView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
+            WeatherCardView(cityName: locationName ?? weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
         }.task {
             print("Refresh list item view")
             await weatherViewModel.refresh()

@@ -16,18 +16,22 @@ struct AdditionalCardView: View {
     var body: some View {
         HStack {
             VStack {
+                Spacer()
+                Spacer()
                 Image(systemName: systemName)
                     .font(.title)
+                Spacer()
                 Text(text)
-                    .font(.title3)
-                HStack {
-                    Text(value)
-                        .font(.title)
-                }.padding(2)
-            }.padding()
+                    .font(.title2)
+                Spacer()
+                Text(value)
+                    .font(.title)
+                Spacer()
+                Spacer()
+            }
         }
-        .frame(width: 120, height: 150)
-        .foregroundColor(.white).background(color)
+        .frame(maxWidth: 175, maxHeight: 150)
+        .background(color).foregroundColor(.white)
     }
 }
 

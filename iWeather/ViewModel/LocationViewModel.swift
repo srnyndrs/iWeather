@@ -10,7 +10,7 @@ import CoreData
 import MapKit
 
 class LocationViewModel: ObservableObject {
-    public var weatherService: WeatherService
+    var weatherService: WeatherService
     let container: NSPersistentContainer
     @Published var locations: [Location] = []
     @Published var locationMap: [Location : LocationItem] = [:]
@@ -30,7 +30,6 @@ class LocationViewModel: ObservableObject {
     func fetchLocations() {
         print("Fetch locations")
         let request = NSFetchRequest<Location>(entityName: "Location")
-        
         do {
             locations = try container.viewContext.fetch(request)
             for location in locations {
@@ -63,7 +62,6 @@ class LocationViewModel: ObservableObject {
     func saveData() {
         do {
             try container.viewContext.save()
-            //fetchLocations()
         } catch let error {
             print(error)
         }
@@ -74,6 +72,7 @@ class LocationViewModel: ObservableObject {
     }
     
 }
+
 extension Array where Element: Hashable {
     func difference(from other: [Element]) -> [Element] {
         let thisSet = Set(self)

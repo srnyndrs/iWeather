@@ -15,6 +15,7 @@ struct WeatherDetailsView: View {
         GeometryReader { geometry in
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack {
+                    Spacer()
                     WeatherInfoView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
                     Spacer()
                     Text("Forecast")
@@ -31,12 +32,13 @@ struct WeatherDetailsView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     AdditionalInfoView(wind: weatherViewModel.wind, humidity: weatherViewModel.humidity, sunrise: weatherViewModel.sunrise, sunset: weatherViewModel.sunset)
                 }.frame(minHeight: geometry.size.height)
-            }.padding(.bottom, 6).frame(width: geometry.size.width) //.padding(.top, 64)
-                .task {
-                    print("Refresh details view")
-                    await weatherViewModel.refresh()
-                    await forecastViewModel.refresh()
-                }
+            }
+            .padding(.top, 1)
+            .padding(.bottom, 6).frame(width: geometry.size.width)
+            .task {
+                await weatherViewModel.refresh()
+                await forecastViewModel.refresh()
+            }
         }
     }
 }

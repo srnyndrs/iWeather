@@ -34,8 +34,8 @@ struct LocationListView: View {
                         //let foreCastViewModel = ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
                         let weatherViewModel = locationViewModel.getLocationItem(location: item)?.weatherViewModel ?? WeatherViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
                         let foreCastViewModel = locationViewModel.getLocationItem(location: item)?.forecastViewModel ?? ForecastViewModel(weatherService: weatherService, location: CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude))
-                        NavigationLink(destination: WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: foreCastViewModel)) {
-                            WeatherListItem(weatherViewModel: weatherViewModel)
+                        NavigationLink(destination: WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: foreCastViewModel).navigationTitle(item.name ?? "")) {
+                            WeatherListItem(weatherViewModel: weatherViewModel, locationName: item.name)
                         }
                     }
                     .onDelete(perform: deleteItems)
@@ -44,11 +44,11 @@ struct LocationListView: View {
                 ).listRowSeparator(.visible)
             }
             .listStyle(.insetGrouped)
-            .environment(\.horizontalSizeClass, .regular)
+            //.environment(\.horizontalSizeClass, .regular)
             .navigationTitle("Locations")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    NewButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
+                    NewLocationButton(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()

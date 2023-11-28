@@ -16,12 +16,18 @@ struct AdditionalInfoView: View {
     var body: some View {
         LazyVStack {
             HStack {
+                Spacer()
                 AdditionalCardView(systemName: "wind", text: "wind", value: "\(wind) m/s", color: Color.gray)
+                Spacer()
                 AdditionalCardView(systemName: "humidity", text: "humidity", value: "\(humidity)%", color: Color.cyan)
+                Spacer()
             }
             HStack {
+                Spacer()
                 AdditionalCardView(systemName: "sun.horizon", text: "sunrise", value: "\(sunrise)", color: Color.yellow)
-                AdditionalCardView(systemName: "moon.fill", text: "sunset", value: "\(sunset)", color: Color.mint)
+                Spacer()
+                AdditionalCardView(systemName: "moon.fill", text: "sunset", value: "\(sunset)", color: Color.indigo)
+                Spacer()
             }
         }
     }

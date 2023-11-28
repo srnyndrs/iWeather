@@ -9,28 +9,32 @@ import Foundation
 
 class GeocodingViewModel: ObservableObject {
     private let API_KEY: String = "dfbdbf9247ca47fe8f22bb3f2f714faa"
-    public let geocodingService: GeocodingService
+    let geocodingService: GeocodingService
     @Published var results = [LocationDataItem]()
-    @Published var searchText: String = "" {
-        didSet {
-            //fetchData()
-        }
-    }
+    @Published var searchText: String = ""
     
     init(geocodingService: GeocodingService) {
         self.geocodingService = geocodingService
     }
     
-    func searchForLocation(_ text: String) async {
-        await geocodingService.populateLocations(query: text) { locationData in
-            DispatchQueue.main.async {
-                self.results = locationData.results
-                print(self.results)
+    func searchForLocation() async {
+        if !searchText.isEmpty {
+            await geocodingService.populateLocations(query: searchText) { locationData in
+                DispatchQueue.main.async {
+                    self.results = locationData.results
+                    print(self.results)
+                }
             }
+        } else {
+            self.results = [LocationDataItem]()
         }
     }
     
-    func fetchData() {
+    func resetSearch() {
+        self.results = [LocationDataItem]()
+    }
+    
+    /*func fetchData() {
         if !searchText.isEmpty {
             print("Fetch data")
             let urlString = "https://api.geoapify.com/v1/geocode/search?text=\(searchText)&lang=en&limit=10&type=city&format=json&apiKey=\(API_KEY)"
@@ -57,5 +61,5 @@ class GeocodingViewModel: ObservableObject {
         } else {
             self.results = [LocationDataItem]()
         }
-    }
+    }*/
 }

@@ -11,6 +11,7 @@ import CoreLocation
 
 class WeatherViewModel: ObservableObject {
     var location: CLLocationCoordinate2D
+    let weatherService: WeatherService
     @Published var cityName: String = ""
     @Published var temperature: String = ""
     @Published var weatherDescription: String = ""
@@ -20,17 +21,14 @@ class WeatherViewModel: ObservableObject {
     @Published var humidity: String = ""
     @Published var sunrise: String = ""
     @Published var sunset: String = ""
-    private var loaded: Bool
+    private var loaded: Bool = false
     
-    public let weatherService: WeatherService
-    
-    public init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
+    init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
         self.weatherService = weatherService
         self.location = location
-        self.loaded = false
     }
     
-    public func refresh() async {
+    func refresh() async {
         if !loaded {
             await weatherService.populateWeatherData(coords: location) { weather in
                 DispatchQueue.main.async {

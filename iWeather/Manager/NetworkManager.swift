@@ -28,5 +28,4 @@ class NetworkManager {
         
         return result
     }
-    
 }

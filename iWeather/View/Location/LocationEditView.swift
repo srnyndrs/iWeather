@@ -9,8 +9,6 @@ import SwiftUI
 
 struct LocationEditView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    /*@Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var locationHolder: LocationHolder*/
     @ObservedObject var locationViewModel: LocationViewModel
     @ObservedObject var geocodingViewModel: GeocodingViewModel
     @State private var searchText = ""
@@ -69,11 +67,11 @@ struct LocationEditView: View {
                             self.nameText = ""
                             self.latitudeText = ""
                             self.longitudeText = ""
-                            geocodingViewModel.fetchData()
+                            geocodingViewModel.resetSearch()
                         }
                 }
                 .onSubmit(of: .text){
-                    Task { self.geocodingViewModel.fetchData() }
+                    Task { await self.geocodingViewModel.searchForLocation() }
                 }
                 Section(header: Text("Location")) {
                     TextField("Name", text: $nameText)
@@ -115,8 +113,6 @@ struct LocationEditView: View {
                                 self.latitudeText = "\(data.latitude)"
                                 self.longitudeText = "\(data.longitude)"
                             }
-                    }.onAppear {
-                        self.geocodingViewModel.fetchData()
                     }
                 }
             }

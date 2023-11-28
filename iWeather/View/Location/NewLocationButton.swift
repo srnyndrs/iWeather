@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewButton: View {
+struct NewLocationButton: View {
     //@EnvironmentObject var locationHolder: LocationHolder
     @ObservedObject var locationViewModel: LocationViewModel
     @ObservedObject var geocodingViewModel: GeocodingViewModel
