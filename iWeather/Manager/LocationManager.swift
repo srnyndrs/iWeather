@@ -12,22 +12,23 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     @Published var authorizationStatus: CLAuthorizationStatus?
     
+    @Published var latitude: Double = 0 /*{
+        locationManager.location?.coordinate.latitude ?? Constants.defaultLocation.latitude
+    }*/
+    
+    @Published var longitude: Double = 0 /*{
+        locationManager.location?.coordinate.longitude ?? Constants.defaultLocation.longitude
+    }*/
+    
     var locationCoordinate: CLLocationCoordinate2D {
-        locationManager.location?.coordinate ?? Constants.defaultLocation.coordination
+        locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
     }
     
-    var userLocation : UserLocation {
+    var userLocation: UserLocation {
         UserLocation(latitude: self.latitude, longitude: self.longitude)
     }
     
-    var latitude: Double {
-        locationManager.location?.coordinate.latitude ?? Constants.defaultLocation.latitude
-    }
-    
-    var longitude: Double {
-        locationManager.location?.coordinate.longitude ?? Constants.defaultLocation.longitude
-    }
-    
+
     override init() {
         super.init()
         locationManager.delegate = self
@@ -47,7 +48,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             case .notDetermined:
                 authorizationStatus = .notDetermined
                 manager.requestWhenInUseAuthorization()
-                print("asked")
                 break
             default:
                 break
@@ -55,7 +55,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //
+        guard let location = locations.last?.coordinate else { return }
+        self.latitude = location.latitude
+        self.longitude = location.longitude
+        locationManager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

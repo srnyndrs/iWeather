@@ -70,7 +70,6 @@ class LocationViewModel: ObservableObject {
     func getLocationItem(location: Location) -> LocationItem? {
         return locationMap[location]
     }
-    
 }
 
 extension Array where Element: Hashable {

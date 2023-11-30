@@ -8,9 +8,8 @@
 import SwiftUI
 import MapKit
 
-struct MapScene: View {
+struct MapView: View {
     @ObservedObject var locationViewModel: LocationViewModel
-    @State var userLocation: UserLocation
     @State var cameraPosition: MapCameraPosition
     
     var body: some View {

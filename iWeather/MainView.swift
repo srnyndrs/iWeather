@@ -18,7 +18,8 @@ struct MainView: View {
     var body: some View {
         TabView {
             VStack {
-                WeatherScene(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel)
+                // Main Weather Tab
+                WeatherDetailsView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel)
             }.tabItem {
                 VStack {
                     Image(systemName: "house.fill")
@@ -26,7 +27,8 @@ struct MainView: View {
                 }
             }
             VStack {
-                LocationScene(weatherService: weatherService, locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
+                // Location Tab
+                LocationListView(weatherService: weatherService, locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel)
             }.tabItem {
                 VStack {
                     Image(systemName: "list.bullet")
@@ -34,9 +36,10 @@ struct MainView: View {
                 }
             }
             VStack {
-                MapScene(locationViewModel: locationViewModel, userLocation: locationManager.userLocation, cameraPosition: locationManager.userLocation.cameraPosition)
+                // Map Tab
+                MapView(locationViewModel: locationViewModel, cameraPosition: locationManager.userLocation.cameraPosition)
             }.tabItem {
-                VStack{
+                VStack {
                     Image(systemName: "map.fill")
                     Text("Map")
                 }

@@ -8,25 +8,11 @@
 import SwiftUI
 
 struct NewLocationButton: View {
-    //@EnvironmentObject var locationHolder: LocationHolder
     @ObservedObject var locationViewModel: LocationViewModel
     @ObservedObject var geocodingViewModel: GeocodingViewModel
     
     var body: some View {
-        /*Spacer()
-        HStack {
-            NavigationLink(destination: LocationEditView(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel, passedLocation: nil)){
-                Text("New location")
-                    .font(.headline)
-            }
-            .padding(15)
-            .foregroundColor(.white)
-            .background(Color.accentColor)
-            .cornerRadius(30)
-            .padding(30)
-            .shadow(color: .black.opacity(0.3), radius: 3, x: 3, y: 3)
-        }*/
-        NavigationLink(destination: LocationEditView(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel, passedLocation: nil).navigationTitle("New location")){
+        NavigationLink(destination: LocationFormView(locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel).navigationTitle("New location")){
             Text("New")
         }
     }

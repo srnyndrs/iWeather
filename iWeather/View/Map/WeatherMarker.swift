@@ -35,6 +35,9 @@ struct WeatherMarker: View {
                     }
                 }
                 .frame(width: 50, height: 50)*/
+                Text("\(weatherViewModel.cityName)")
+                    .font(.system(size: 8))
+                    .bold()
                 AsyncImage(url: URL(string: weatherViewModel.weatherIconImage)) { image in
                     image
                         .resizable()
@@ -45,8 +48,8 @@ struct WeatherMarker: View {
                 }
                 Text(" \(weatherViewModel.temperature)°C")
                     .font(.footnote)
-                    .foregroundColor(.white)
-            }.padding(2)
+                    
+            }.padding(2).foregroundColor(.white)
         }.frame(width: 20, height: 20)
         .task {
             await weatherViewModel.refresh()

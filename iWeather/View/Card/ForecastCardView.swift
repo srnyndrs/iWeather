@@ -14,22 +14,13 @@ struct ForecastCardView: View {
     var body: some View {
         LazyHStack {
             LazyVStack(alignment: .center) {
-                Text(formatDate((Int(forecast.dt ?? 0))).first ?? "")
+                Text(formatDateToDay(forecast.dt ?? 0))
                     .font(.headline)
                     .foregroundColor(.white)
                     .bold()
-                Text(formatDate((Int(forecast.dt ?? 0))).last ?? "")
+                Text(formatDateToTime(forecast.dt ?? 0))
                     .font(.headline)
                     .foregroundColor(.white)
-                /*AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(forecast.weather?.first?.icon ?? "").png")) { image in
-                    image
-                        .resizable()
-                        .clipped()
-                        .scaledToFill()
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(width: 50, height: 50)*/
                 AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(forecast.weather?.first?.icon ?? "")@2x.png")) { image in
                     image
                         .resizable()
@@ -43,27 +34,30 @@ struct ForecastCardView: View {
                     .bold()
             }.frame(width: 100, height: 180)
         }
-        .background(
-            LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing)
-        )
+        .background(LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing))
         .cornerRadius(5)
         .padding(.horizontal, 10)
     }
     
-    func formatDate(_ seconds: Int) -> [String]! {
+    func formatDateToTime(_ seconds: Int) -> String {
+        if seconds == 0 {
+            return "00:00"
+        }
         let date = Date(timeIntervalSince1970: Double(seconds))
-
-        let dayFormat = DateFormatter()
         let timeFormat = DateFormatter()
-        
-        dayFormat.timeZone = TimeZone(secondsFromGMT: timezone)
         timeFormat.timeZone = TimeZone(secondsFromGMT: timezone)
-        
-        dayFormat.dateFormat = "HH:mm"
-        timeFormat.dateFormat = "EEEE"
-        
-        let newDayString = dayFormat.string(from: date)
-        let newTimeString = timeFormat.string(from: date)
-        return [newTimeString, newDayString]
+        timeFormat.dateFormat = "HH:mm"
+        return timeFormat.string(from: date)
+    }
+    
+    func formatDateToDay(_ seconds: Int) -> String {
+        if seconds == 0 {
+            return "Unknown"
+        }
+        let date = Date(timeIntervalSince1970: Double(seconds))
+        let dayFormat = DateFormatter()
+        dayFormat.timeZone = TimeZone(secondsFromGMT: timezone)
+        dayFormat.dateFormat = "EEEE"
+        return dayFormat.string(from: date)
     }
 }

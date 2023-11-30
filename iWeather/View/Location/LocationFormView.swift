@@ -7,15 +7,17 @@
 
 import SwiftUI
 
-struct LocationEditView: View {
+struct LocationFormView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var locationViewModel: LocationViewModel
     @ObservedObject var geocodingViewModel: GeocodingViewModel
+    
     @State private var searchText = ""
     @State var selectedLocation: Location?
     @State var nameText: String
     @State var latitudeText: String
     @State var longitudeText: String
+    // Validation variables
     @State var nameValidation: Bool
     @State var latValidation: Bool
     @State var lonValidation: Bool
@@ -36,22 +38,15 @@ struct LocationEditView: View {
         }
     }
     
-    init(locationViewModel: LocationViewModel, geocodingViewModel: GeocodingViewModel, passedLocation: Location?) {
+    init(locationViewModel: LocationViewModel, geocodingViewModel: GeocodingViewModel) {
         self.locationViewModel = locationViewModel
         self.geocodingViewModel = geocodingViewModel
         _nameValidation = State(initialValue: true)
         _latValidation = State(initialValue: true)
         _lonValidation = State(initialValue: true)
-        if let item = passedLocation {
-            _selectedLocation = State(initialValue: item)
-            _nameText = State(initialValue: item.name ?? "")
-            _latitudeText = State(initialValue: "\(item.latitude)" )
-            _longitudeText = State(initialValue: "\(item.longitude)" )
-        } else {
-            _nameText = State(initialValue: "")
-            _latitudeText = State(initialValue: "")
-            _longitudeText = State(initialValue: "")
-        }
+        _nameText = State(initialValue: "")
+        _latitudeText = State(initialValue: "")
+        _longitudeText = State(initialValue: "")
     }
     
     var body: some View {
@@ -64,9 +59,9 @@ struct LocationEditView: View {
                     Image(systemName: "arrow.counterclockwise")
                         .onTapGesture {
                             geocodingViewModel.searchText = ""
-                            self.nameText = ""
-                            self.latitudeText = ""
-                            self.longitudeText = ""
+                            nameText = ""
+                            latitudeText = ""
+                            longitudeText = ""
                             geocodingViewModel.resetSearch()
                         }
                 }
@@ -109,9 +104,9 @@ struct LocationEditView: View {
                     List(geocodingViewModel.results, id: \.address) { data in
                         Text("\(data.address)")
                             .onTapGesture {
-                                self.nameText = data.city
-                                self.latitudeText = "\(data.latitude)"
-                                self.longitudeText = "\(data.longitude)"
+                                nameText = data.city
+                                latitudeText = "\(data.latitude)"
+                                longitudeText = "\(data.longitude)"
                             }
                     }
                 }
@@ -121,22 +116,13 @@ struct LocationEditView: View {
     }
     
     func saveAction() {
-        //if selectedLocation == nil {
-            //selectedLocation = Location(context: locationViewModel.container.viewContext)
-        //}
-        
-        //selectedLocation?.name = name
-        //selectedLocation?.latitude = latitude
-        //selectedLocation?.longitude = longitude
         if latitude == nil {
             return
         }
         if longitude == nil {
             return
         }
-        
         locationViewModel.addLocation(name: nameText, lat: latitude!, lon: longitude!)
-        //locationHolder.saveContext(viewContext)
         self.presentationMode.wrappedValue.dismiss()
     }
     

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeatherCardView: View {    
+struct LocationRowView: View {    
     var cityName: String
     var temperature: String
     var weatherIcon: String
@@ -63,10 +63,10 @@ struct WeatherCardView: View {
                     
                 }
             }.padding(.horizontal, 10)
-        }.foregroundColor(.white)
+        }
     }
 }
 
 #Preview {
-    WeatherCardView(cityName: "Budapest", temperature: "12", weatherIcon: "☀️", weatherIconId: "01d", weatherDescription: "Clear")
+    LocationRowView(cityName: "Budapest", temperature: "12", weatherIcon: "☀️", weatherIconId: "01d", weatherDescription: "Clear")
 }
