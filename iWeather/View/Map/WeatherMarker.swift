@@ -15,42 +15,24 @@ struct WeatherMarker: View {
                 .fill(LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing))
                 .stroke(.secondary, lineWidth: 1)
                 .foregroundColor(.black)
-            VStack(alignment: .center, spacing: 0) {
-                //Text(weatherViewModel.weatherIcon).font(.title)
-                /*AsyncImage(url: URL(string: weatherViewModel.weatherIconImage)) { phase in
-                    switch phase {
-                    case .empty:
-                        Image(systemName: "photo")
-                            .frame(width: 50, height: 50)
-                    case .success(let image):
-                        image.resizable()
-                            .clipped()
-                            .frame(maxWidth: 50, maxHeight: 50)
-                    case .failure:
-                        Text(Constants.iconMap[weatherViewModel.weatherIcon ] ?? "❓")
-                            .frame(width: 50, height: 50)
-                    @unknown default:
-                        EmptyView()
-                            .frame(width: 50, height: 50)
-                    }
+            LazyVStack(alignment: .center, spacing: 0) {
+                LazyHStack{
+                    Text("\(weatherViewModel.cityName)")
+                        .font(.system(size: 8))
+                        .bold()
                 }
-                .frame(width: 50, height: 50)*/
-                Text("\(weatherViewModel.cityName)")
-                    .font(.system(size: 8))
-                    .bold()
                 AsyncImage(url: URL(string: weatherViewModel.weatherIconImage)) { image in
                     image
                         .resizable()
                         .clipped()
-                        .frame(width: 50, height: 50)
+                        .frame(width: 25, height: 25)
                 } placeholder: {
-                    ProgressView().frame(width: 50, height: 50)
+                    ProgressView().frame(width: 25, height: 25)
                 }
                 Text(" \(weatherViewModel.temperature)°C")
-                    .font(.footnote)
-                    
-            }.padding(2).foregroundColor(.white)
-        }.frame(width: 20, height: 20)
+                    .font(.system(size: 10))
+            }.padding(4).foregroundColor(.white)
+        }.frame(minWidth: 50, minHeight: 50)
         .task {
             await weatherViewModel.refresh()
         }

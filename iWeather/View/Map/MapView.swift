@@ -22,7 +22,7 @@ struct MapView: View {
                     WeatherMarker(weatherViewModel: locationItem.weatherViewModel)
                 }
             }
-        }
+        }.mapStyle(.hybrid)
         .mapControls {
             MapCompass()
             MapUserLocationButton()

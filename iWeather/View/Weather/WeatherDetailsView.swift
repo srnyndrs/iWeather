@@ -31,6 +31,7 @@ struct WeatherDetailsView: View {
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                     AdditionalInfoView(wind: weatherViewModel.wind, humidity: weatherViewModel.humidity, sunrise: weatherViewModel.sunrise, sunset: weatherViewModel.sunset)
+                    Spacer()
                 }.frame(minHeight: geometry.size.height)
             }
             .padding(.top, 1)

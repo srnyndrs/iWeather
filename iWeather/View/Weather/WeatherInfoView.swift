@@ -19,35 +19,38 @@ struct WeatherInfoView: View {
             Spacer()
             Spacer()
             HStack(alignment: .center) {
-                Spacer()
-                VStack(alignment: .center, spacing: 0){
-                    LazyHStack(alignment: .center){
-                        Image(systemName: "mappin.and.ellipse")
+                LazyVStack(alignment: .leading, spacing: 0){
+                    LazyVStack(alignment: .center, spacing: 0) {
+                        LazyHStack(alignment: .center){
+                            Image(systemName: "mappin.and.ellipse")
+                                .font(.title3)
+                                .foregroundColor(.white)
+                            Text(cityName)
+                                .font(.title)
+                                .foregroundColor(.white)
+                        }
+                        Text(temperature + "°C")
+                            .font(.system(size: 42))
+                            .foregroundColor(.white)
+                            .padding(.top, 12)
+                            .bold()
+                        Text(weatherDescription)
                             .font(.title2)
                             .foregroundColor(.white)
-                        Text(cityName)
-                            .font(.largeTitle)
-                            .foregroundColor(.white)
+                            .padding(.top, 6)
                     }
-                    Text(temperature + "°C")
-                        .font(.system(size: 48))
-                        .foregroundColor(.white)
-                        .padding(.top, 12)
-                        .bold()
-                    Text(weatherDescription)
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding(.top, 12)
-                }
-                AsyncImage(url: URL(string: weatherIconId)) { image in
-                    image
-                        .resizable()
-                        .clipped()
-                        .frame(width: 125, height: 125)
-                } placeholder: {
-                    ProgressView().frame(width: 125, height: 125)
-                }
+                }.padding(.leading, 6)
                 Spacer()
+                LazyVStack(alignment: .center) {
+                    AsyncImage(url: URL(string: weatherIconId)) { image in
+                        image
+                            .resizable()
+                            .clipped()
+                            .frame(width: 100, height: 100)
+                    } placeholder: {
+                        ProgressView().frame(width: 100, height: 100)
+                    }
+                }.padding(.trailing, 6)
             }
             Spacer()
             Spacer()

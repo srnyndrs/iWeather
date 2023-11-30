@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LocationRowView: View {    
+struct LocationRowView: View {
     var cityName: String
     var temperature: String
     var weatherIcon: String
@@ -16,34 +16,15 @@ struct LocationRowView: View {
     
     var body: some View {
         HStack {
-            VStack {
-                /*AsyncImage(url: URL(string: weatherIconId)) { phase in
-                    switch phase {
-                    case .empty:
-                        Image(systemName: "photo")
-                            .frame(width: 50, height: 50)
-                    case .success(let image):
-                        image.resizable()
-                            .frame(width: 50, height: 50)
-                            .border(.red)
-                    case .failure:
-                        Text(weatherIcon)
-                            .font(.largeTitle)
-                            .frame(width: 50, height: 50)
-                    @unknown default:
-                        EmptyView()
-                            .frame(width: 50, height: 50)
-                    }
-                }.frame(width: 50, height: 50)*/
+            VStack(alignment: .center) {
                 AsyncImage(url: URL(string: weatherIconId)) { image in
                     image
                         .resizable()
                         .clipped()
-                        .scaledToFill()
+                        .frame(width: 50, height: 50)
                 } placeholder: {
-                    ProgressView()
+                    ProgressView().frame(width: 50, height: 50)
                 }
-                .frame(width: 50, height: 50)
             }
             VStack(spacing: 8) {
                 Text(cityName)
@@ -62,7 +43,7 @@ struct LocationRowView: View {
                         .bold()
                     
                 }
-            }.padding(.horizontal, 10)
+            }.padding(.horizontal, 8)
         }
     }
 }
