@@ -12,15 +12,15 @@ import CoreLocation
 class WeatherViewModel: ObservableObject {
     var location: CLLocationCoordinate2D
     let weatherService: WeatherService
-    @Published var cityName: String = ""
-    @Published var temperature: String = ""
-    @Published var weatherDescription: String = ""
+    @Published var cityName: String = "Unknown"
+    @Published var temperature: String = "--°C"
+    @Published var weatherDescription: String = "Sunny"
     @Published var weatherIcon: String = ""
     @Published var weatherIconImage: String = ""
-    @Published var wind: String = ""
-    @Published var humidity: String = ""
-    @Published var sunrise: String = ""
-    @Published var sunset: String = ""
+    @Published var wind: String = "0"
+    @Published var humidity: String = "0"
+    @Published var sunrise: String = "7:00"
+    @Published var sunset: String = "20:00"
     private var loaded: Bool = false
     
     init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
