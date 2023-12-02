@@ -17,5 +17,4 @@ public struct ForecastData {
         timezone = response?.city?.timezone ?? 0
         forecastList = response?.list ?? []
     }
-    
 }

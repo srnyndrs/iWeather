@@ -16,7 +16,7 @@ struct iWeatherApp: App {
     var body: some Scene {
         WindowGroup {
             if locationManager.authorizationStatus == .authorizedWhenInUse {
-                // ViewModel initialization
+                // ViewModel initializations
                 let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: locationManager.locationCoordinate)
                 let forecastViewModel = ForecastViewModel(weatherService: weatherService, location: locationManager.locationCoordinate)
                 let locationViewModel = LocationViewModel(weatherService: weatherService)

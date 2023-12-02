@@ -10,7 +10,6 @@ import SwiftUI
 struct WeatherInfoView: View {
     var cityName: String
     var temperature: String
-    var weatherIcon: String
     var weatherIconId: String
     var weatherDescription: String
     
@@ -64,5 +63,5 @@ struct WeatherInfoView: View {
 }
 
 #Preview {
-    WeatherInfoView(cityName: "Budapest", temperature: "12", weatherIcon: "☀️", weatherIconId: "https://openweathermap.org/img/wn/01n@2x.png", weatherDescription: "Sunny")
+    WeatherInfoView(cityName: "Budapest", temperature: "12", weatherIconId: "https://openweathermap.org/img/wn/01n@2x.png", weatherDescription: "Sunny")
 }

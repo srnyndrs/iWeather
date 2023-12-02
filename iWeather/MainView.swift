@@ -37,7 +37,7 @@ struct MainView: View {
             }
             VStack {
                 // Map Tab
-                MapView(locationViewModel: locationViewModel, cameraPosition: locationManager.userLocation.cameraPosition)
+                MapView(locationViewModel: locationViewModel)
             }.tabItem {
                 VStack {
                     Image(systemName: "map.fill")

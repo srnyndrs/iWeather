@@ -10,7 +10,6 @@ import SwiftUI
 struct LocationRowView: View {
     var cityName: String
     var temperature: String
-    var weatherIcon: String
     var weatherIconId: String
     var weatherDescription: String
     
@@ -49,5 +48,5 @@ struct LocationRowView: View {
 }
 
 #Preview {
-    LocationRowView(cityName: "Budapest", temperature: "12", weatherIcon: "☀️", weatherIconId: "01d", weatherDescription: "Clear")
+    LocationRowView(cityName: "Budapest", temperature: "12", weatherIconId: "01d", weatherDescription: "Clear")
 }

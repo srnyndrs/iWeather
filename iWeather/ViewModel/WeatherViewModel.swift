@@ -15,7 +15,6 @@ class WeatherViewModel: ObservableObject {
     @Published var cityName: String = "Unknown"
     @Published var temperature: String = "--°C"
     @Published var weatherDescription: String = "Sunny"
-    @Published var weatherIcon: String = ""
     @Published var weatherIconImage: String = ""
     @Published var wind: String = "0"
     @Published var humidity: String = "0"
@@ -35,7 +34,6 @@ class WeatherViewModel: ObservableObject {
                     self.cityName = weather.city
                     self.temperature = "\(weather.temperature)"
                     self.weatherDescription = weather.description.capitalized
-                    self.weatherIcon = Constants.iconMap[weather.iconName] ?? Constants.defaultIcon
                     self.weatherIconImage = weather.weatherIconUrl
                     self.wind = weather.wind
                     self.humidity = weather.humidity

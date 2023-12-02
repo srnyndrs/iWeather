@@ -28,7 +28,6 @@ class LocationViewModel: ObservableObject {
     }
     
     func fetchLocations() {
-        print("Fetch locations")
         let request = NSFetchRequest<Location>(entityName: "Location")
         do {
             locations = try container.viewContext.fetch(request)
@@ -69,6 +68,16 @@ class LocationViewModel: ObservableObject {
     
     func getLocationItem(location: Location) -> LocationItem? {
         return locationMap[location]
+    }
+}
+
+class LocationItem: ObservableObject {
+    @Published var weatherViewModel: WeatherViewModel
+    @Published var forecastViewModel: ForecastViewModel
+    
+    init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
+        self.weatherViewModel = WeatherViewModel(weatherService: weatherService, location: location)
+        self.forecastViewModel = ForecastViewModel(weatherService: weatherService, location: location)
     }
 }
 

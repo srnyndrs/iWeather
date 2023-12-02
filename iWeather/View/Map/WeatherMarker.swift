@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct WeatherMarker: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
@@ -30,16 +31,18 @@ struct WeatherMarker: View {
                     ProgressView().frame(width: 25, height: 25)
                 }
                 Text(" \(weatherViewModel.temperature)°C")
-                    .font(.system(size: 10))
-            }.padding(4).foregroundColor(.white)
-        }.frame(minWidth: 50, minHeight: 50)
+                .font(.system(size: 10))
+            }
+            .padding(4)
+            .foregroundColor(.white)
+        }
+        .frame(minWidth: 50, minHeight: 50)
         .task {
             await weatherViewModel.refresh()
         }
     }
 }
 
-
 #Preview {
-    WeatherMarker(weatherViewModel: WeatherViewModel(weatherService: WeatherService(), location: Constants.MockUserLocation.coordinate))
+    WeatherMarker(weatherViewModel: WeatherViewModel(weatherService: WeatherService(), location: CLLocationCoordinate2D(latitude: 12, longitude: 12)))
 }

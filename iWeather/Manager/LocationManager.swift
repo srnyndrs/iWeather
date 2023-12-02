@@ -11,23 +11,12 @@ import CoreLocation
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     @Published var authorizationStatus: CLAuthorizationStatus?
-    
-    @Published var latitude: Double = 0 /*{
-        locationManager.location?.coordinate.latitude ?? Constants.defaultLocation.latitude
-    }*/
-    
-    @Published var longitude: Double = 0 /*{
-        locationManager.location?.coordinate.longitude ?? Constants.defaultLocation.longitude
-    }*/
+    var latitude: Double = 0
+    var longitude: Double = 0
     
     var locationCoordinate: CLLocationCoordinate2D {
         locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
     }
-    
-    var userLocation: UserLocation {
-        UserLocation(latitude: self.latitude, longitude: self.longitude)
-    }
-    
 
     override init() {
         super.init()

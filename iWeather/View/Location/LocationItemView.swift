@@ -12,7 +12,8 @@ struct LocationItemView: View {
     var locationName: String?
     var body: some View {
         HStack {
-            LocationRowView(cityName: locationName ?? weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription).foregroundColor(.white)
+            LocationRowView(cityName: locationName ?? weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
+                .foregroundColor(.white)
         }.task {
             await weatherViewModel.refresh()
         }

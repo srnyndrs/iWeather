@@ -19,7 +19,8 @@ struct ForecastInfoView: View {
                         ForecastCardView(forecast: forecast, timezone: timezone)
                     }
                 }
-            }.frame(maxHeight: 150).padding(.horizontal, 6)
+            }
+            .frame(maxHeight: 150).padding(.horizontal, 6)
         }
     }
 }

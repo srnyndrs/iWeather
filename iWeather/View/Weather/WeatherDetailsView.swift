@@ -16,7 +16,7 @@ struct WeatherDetailsView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack {
                     Spacer()
-                    WeatherInfoView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIcon: weatherViewModel.weatherIcon, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
+                    WeatherInfoView(cityName: weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
                     Spacer()
                     Text("Forecast")
                         .font(.title)

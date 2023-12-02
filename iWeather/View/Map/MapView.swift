@@ -10,10 +10,9 @@ import MapKit
 
 struct MapView: View {
     @ObservedObject var locationViewModel: LocationViewModel
-    @State var cameraPosition: MapCameraPosition
     
     var body: some View {
-        Map(position: $cameraPosition) {
+        Map {
             UserAnnotation()
             ForEach(locationViewModel.locations) { location in
                 let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
@@ -22,7 +21,8 @@ struct MapView: View {
                     WeatherMarker(weatherViewModel: locationItem.weatherViewModel)
                 }
             }
-        }.mapStyle(.hybrid)
+        }
+        .mapStyle(.hybrid)
         .mapControls {
             MapCompass()
             MapUserLocationButton()

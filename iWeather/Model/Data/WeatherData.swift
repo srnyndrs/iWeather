@@ -50,5 +50,4 @@ public struct WeatherData {
             return timeFormat.string(from: Date(timeIntervalSince1970: Double(seconds)))
         }
     }
-    
 }
