@@ -28,15 +28,19 @@ struct WeatherInfoView: View {
                                 .font(.title)
                                 .foregroundColor(.white)
                         }
-                        Text(temperature + "°C")
-                            .font(.system(size: 42))
-                            .foregroundColor(.white)
-                            .padding(.top, 12)
-                            .bold()
-                        Text(weatherDescription)
-                            .font(.title2)
-                            .foregroundColor(.white)
-                            .padding(.top, 6)
+                        LazyHStack(alignment: .center){
+                            Text(temperature + "°C")
+                                .font(.system(size: 42))
+                                .foregroundColor(.white)
+                                .padding(.top, 12)
+                                .bold()
+                        }
+                        LazyHStack(alignment: .center){
+                            Text(weatherDescription)
+                                .font(.title3)
+                                .foregroundColor(.white)
+                                .padding(.top, 6)
+                        }
                     }
                 }.padding(.leading, 6)
                 Spacer()
@@ -57,7 +61,8 @@ struct WeatherInfoView: View {
         .background(
             LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing
             )
-        ).cornerRadius(5)
+        )
+        .cornerRadius(5)
         .padding(.horizontal, 6)
     }
 }

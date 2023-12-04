@@ -36,10 +36,13 @@ struct WeatherDetailsView: View {
             }
             .padding(.top, 1)
             .padding(.bottom, 6).frame(width: geometry.size.width)
-            .task {
-                await weatherViewModel.refresh()
-                await forecastViewModel.refresh()
+            .onAppear {
+                weatherViewModel.fetchData()
+                forecastViewModel.fetchData()
             }
+        }.refreshable {
+            weatherViewModel.fetchData(true)
+            forecastViewModel.fetchData(true)
         }
     }
 }

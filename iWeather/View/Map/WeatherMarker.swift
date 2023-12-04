@@ -17,7 +17,7 @@ struct WeatherMarker: View {
                 .stroke(.secondary, lineWidth: 1)
                 .foregroundColor(.black)
             LazyVStack(alignment: .center, spacing: 0) {
-                LazyHStack{
+                LazyHStack {
                     Text("\(weatherViewModel.cityName)")
                         .font(.system(size: 8))
                         .bold()
@@ -38,7 +38,7 @@ struct WeatherMarker: View {
         }
         .frame(minWidth: 50, minHeight: 50)
         .task {
-            await weatherViewModel.refresh()
+            weatherViewModel.fetchData()
         }
     }
 }

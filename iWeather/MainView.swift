@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject var weatherViewModel: WeatherViewModel
-    @ObservedObject var forecastViewModel: ForecastViewModel
+    @StateObject var weatherViewModel: WeatherViewModel
+    @StateObject var forecastViewModel: ForecastViewModel
     @ObservedObject var locationViewModel: LocationViewModel
     @ObservedObject var geocodingViewModel: GeocodingViewModel
     @ObservedObject var locationManager: LocationManager

@@ -12,19 +12,24 @@ import CoreLocation
 class ForecastViewModel: ObservableObject {
     var location: CLLocationCoordinate2D
     let weatherService: WeatherService
+    var locationManager: LocationManager?
+    
     @Published var cityName: String = "City Name"
     @Published var forecast: [Forecast] = []
     @Published var timezone: Int = 0
     private var loaded: Bool = false
     
-    init(weatherService: WeatherService, location: CLLocationCoordinate2D) {
+    init(weatherService: WeatherService, location: CLLocationCoordinate2D, locationManager: LocationManager? = nil) {
         self.weatherService = weatherService
         self.location = location
+        self.locationManager = locationManager
+        self.locationManager?.locationObservers.append(self)
     }
     
-    func refresh() async {
-        if !loaded {
-            await weatherService.populateForecastData(coords: location) { forecast in
+    func fetchData(_ forced: Bool = false) {
+        if !loaded || forced {
+            print("Forecast fetch")
+            weatherService.fetchForecastData(coords: location) { forecast in
                 DispatchQueue.main.async {
                     self.cityName = forecast.cityName
                     self.forecast = forecast.forecastList
@@ -35,4 +40,11 @@ class ForecastViewModel: ObservableObject {
         }
     }
 
+}
+
+extension ForecastViewModel : LocationObserver {
+    func updateLocation(_ location: CLLocationCoordinate2D) {
+        self.location = location
+        self.fetchData(true)
+    }
 }

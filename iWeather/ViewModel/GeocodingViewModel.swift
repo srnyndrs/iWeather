@@ -16,9 +16,9 @@ class GeocodingViewModel: ObservableObject {
         self.geocodingService = geocodingService
     }
     
-    func searchForLocation() async {
+    func searchLocation() {
         if !searchText.isEmpty {
-            await geocodingService.populateLocations(query: searchText) { locationData in
+            geocodingService.fetchLocations(query: searchText) { locationData in
                 DispatchQueue.main.async {
                     self.results = locationData.results
                 }

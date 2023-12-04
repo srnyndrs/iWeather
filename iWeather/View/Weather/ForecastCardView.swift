@@ -51,9 +51,7 @@ struct ForecastCardView: View {
     }
     
     func formatDateToDay(_ seconds: Int) -> String {
-        if seconds == 0 {
-            return "Unknown"
-        }
+        if seconds == 0 { return "Unknown" }
         let date = Date(timeIntervalSince1970: Double(seconds))
         let dayFormat = DateFormatter()
         dayFormat.timeZone = TimeZone(secondsFromGMT: timezone)

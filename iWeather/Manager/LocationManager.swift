@@ -14,20 +14,31 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var latitude: Double = 0
     var longitude: Double = 0
     
+    var locationObservers = [LocationObserver]()
+    private var timeoutTimer: Timer?
+    
     var locationCoordinate: CLLocationCoordinate2D {
-        locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
+        CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
     }
 
     override init() {
         super.init()
         locationManager.delegate = self
+        timeoutTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(LocationManager.getLocation), userInfo: nil, repeats: true)
+    }
+    
+    @objc func getLocation(){
+        print("getLocation")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
             case .authorizedWhenInUse:
                 authorizationStatus = .authorizedWhenInUse
-                locationManager.requestLocation()
+                getLocation()
                 break
             case .restricted:
                 authorizationStatus = .restricted
@@ -44,13 +55,37 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last?.coordinate else { return }
-        self.latitude = location.latitude
-        self.longitude = location.longitude
+        print("location update")
+        guard let location = locations.last else { return }
+        
+        if -location.timestamp.timeIntervalSinceNow > 5.0 {
+            return
+        }
+        
+        if location.horizontalAccuracy < 0 {
+            return
+        }
+        
+        let distanceInMeters = location.distance(from: CLLocation(latitude: self.latitude, longitude: self.longitude))
+
+        if location.horizontalAccuracy >= manager.desiredAccuracy && distanceInMeters > 1000 {
+            print("updated")
+            self.latitude = location.coordinate.latitude
+            self.longitude = location.coordinate.longitude
+            locationObservers.forEach { observer in
+                observer.updateLocation(locationCoordinate)
+            }
+        }
+        
         locationManager.stopUpdatingLocation()
+        locationManager.delegate = nil
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("\(error.localizedDescription)")
     }
+}
+
+protocol LocationObserver : AnyObject {
+    func updateLocation(_ coordinate: CLLocationCoordinate2D)
 }

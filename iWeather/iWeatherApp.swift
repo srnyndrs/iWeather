@@ -17,15 +17,18 @@ struct iWeatherApp: App {
         WindowGroup {
             if locationManager.authorizationStatus == .authorizedWhenInUse {
                 // ViewModel initializations
-                let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: locationManager.locationCoordinate)
-                let forecastViewModel = ForecastViewModel(weatherService: weatherService, location: locationManager.locationCoordinate)
+                let weatherViewModel = WeatherViewModel(weatherService: weatherService, location: locationManager.locationCoordinate, locationManager: locationManager)
+                let forecastViewModel = ForecastViewModel(weatherService: weatherService, location: locationManager.locationCoordinate, locationManager: locationManager)
                 let locationViewModel = LocationViewModel(weatherService: weatherService)
                 let geocodingViewModel = GeocodingViewModel(geocodingService: geocodingService)
                 // MainView initialization
                 MainView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel, locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel, locationManager: locationManager, weatherService: weatherService)
             } else {
                 // Error message
-                Text("The location is not granted!")
+                VStack {
+                    ProgressView()
+                    Text("The location is not granted!")
+                }
             }
         }
     }

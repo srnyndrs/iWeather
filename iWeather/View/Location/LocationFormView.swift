@@ -66,7 +66,8 @@ struct LocationFormView: View {
                         }
                 }
                 .onSubmit(of: .text){
-                    Task { await self.geocodingViewModel.searchForLocation() }
+                    //Task { await self.geocodingViewModel.searchForLocation() }
+                    self.geocodingViewModel.searchLocation()
                 }
                 Section(header: Text("Location")) {
                     TextField("Name", text: $nameText)
