@@ -14,8 +14,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     private var timeoutTimer: Timer?
     var locationObservers = [LocationObserver]()
-    var latitude: Double = 0
-    var longitude: Double = 0
+    var latitude: Double = 47.4979
+    var longitude: Double = 19.0402
     
     var locationCoordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
