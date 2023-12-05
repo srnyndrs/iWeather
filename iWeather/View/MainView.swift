@@ -44,8 +44,6 @@ struct MainView: View {
                     Text("Map")
                 }
             }
-        }.accentColor(.cyan).onAppear(perform: {
-            locationManager.getLocation()
-        })
+        }.accentColor(.cyan)
     }
 }
