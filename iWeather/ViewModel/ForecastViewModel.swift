@@ -17,6 +17,7 @@ class ForecastViewModel: ObservableObject {
     @Published var cityName: String = "City Name"
     @Published var forecast: [Forecast] = []
     @Published var timezone: Int = 0
+    
     private var loaded: Bool = false
     
     init(weatherService: WeatherService, location: CLLocationCoordinate2D, locationManager: LocationManager? = nil) {
@@ -28,7 +29,6 @@ class ForecastViewModel: ObservableObject {
     
     func fetchData(_ forced: Bool = false) {
         if !loaded || forced {
-            print("Forecast fetch")
             weatherService.fetchForecastData(coords: location) { forecast in
                 DispatchQueue.main.async {
                     self.cityName = forecast.cityName

@@ -28,6 +28,7 @@ struct iWeatherApp: App {
                 VStack {
                     ProgressView()
                     Text("The location is not granted!")
+                        .font(.title)
                 }
             }
         }

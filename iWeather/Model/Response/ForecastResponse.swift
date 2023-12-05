@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - ForecastResponse
 struct ForecastResponse: Codable {
     let cod: String?
     let message, cnt: Int?
@@ -24,7 +23,6 @@ struct ForecastResponse: Codable {
     }
 }
 
-// MARK: - City
 struct City: Codable {
     let id: Int?
     let name: String?
@@ -45,7 +43,6 @@ struct City: Codable {
     }
 }
 
-// MARK: - List
 struct Forecast: Codable, Identifiable {
     let id = UUID()
     let dt: Int?
@@ -80,7 +77,6 @@ struct Forecast: Codable, Identifiable {
     }
 }
 
-// MARK: - MainClass
 struct MainClass: Codable {
     let temp, feelsLike, tempMin, tempMax: Double?
     let pressure, seaLevel, grndLevel, humidity: Int?
@@ -112,7 +108,6 @@ struct MainClass: Codable {
     }
 }
 
-// MARK: - Rain
 struct Rain: Codable {
     let the3H: Double?
 

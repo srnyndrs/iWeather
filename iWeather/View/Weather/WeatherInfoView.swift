@@ -51,17 +51,15 @@ struct WeatherInfoView: View {
                             .clipped()
                             .frame(width: 100, height: 100)
                     } placeholder: {
-                        ProgressView().frame(width: 100, height: 100)
+                        ProgressView()
+                            .frame(width: 100, height: 100)
                     }
                 }.padding(.trailing, 6)
             }
             Spacer()
             Spacer()
         }
-        .background(
-            LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-        )
+        .background(LinearGradient(gradient: Gradient(colors: [.blue,.cyan, .cyan]), startPoint: .topLeading, endPoint: .bottomTrailing))
         .cornerRadius(5)
         .padding(.horizontal, 6)
     }

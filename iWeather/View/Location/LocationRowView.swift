@@ -22,7 +22,8 @@ struct LocationRowView: View {
                         .clipped()
                         .frame(width: 50, height: 50)
                 } placeholder: {
-                    ProgressView().frame(width: 50, height: 50)
+                    ProgressView()
+                        .frame(width: 50, height: 50)
                 }
             }
             VStack(spacing: 8) {

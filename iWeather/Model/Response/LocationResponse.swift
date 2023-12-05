@@ -7,19 +7,16 @@
 
 import Foundation
 
-// MARK: - Welcome
 struct LocationResponse: Codable {
     let results: [LocationResult]?
     let query: Query?
 }
 
-// MARK: - Query
 struct Query: Codable {
     let text: String?
     let parsed: Parsed?
 }
 
-// MARK: - Parsed
 struct Parsed: Codable {
     let city, expectedType: String?
 
@@ -29,7 +26,6 @@ struct Parsed: Codable {
     }
 }
 
-// MARK: - Result
 struct LocationResult: Codable {
     let datasource: Datasource?
     let country, countryCode, state, county: String?
@@ -61,18 +57,15 @@ struct LocationResult: Codable {
     }
 }
 
-// MARK: - Bbox
 struct Bbox: Codable {
     let lon1, lat1, lon2, lat2: Double?
 }
 
-// MARK: - Datasource
 struct Datasource: Codable {
     let sourcename, attribution, license: String?
     let url: String?
 }
 
-// MARK: - Rank
 struct Rank: Codable {
     let importance, popularity: Double?
     let confidence, confidenceCityLevel: Int?
@@ -85,7 +78,6 @@ struct Rank: Codable {
     }
 }
 
-// MARK: - Timezone
 struct Timezone: Codable {
     let name, offsetSTD: String?
     let offsetSTDSeconds: Int?

@@ -11,11 +11,11 @@ import CoreLocation
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     @Published var authorizationStatus: CLAuthorizationStatus?
+    
+    private var timeoutTimer: Timer?
+    var locationObservers = [LocationObserver]()
     var latitude: Double = 0
     var longitude: Double = 0
-    
-    var locationObservers = [LocationObserver]()
-    private var timeoutTimer: Timer?
     
     var locationCoordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
@@ -28,7 +28,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     @objc func getLocation(){
-        print("getLocation")
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
@@ -55,7 +54,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("location update")
         guard let location = locations.last else { return }
         
         if -location.timestamp.timeIntervalSinceNow > 5.0 {
@@ -69,10 +67,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         let distanceInMeters = location.distance(from: CLLocation(latitude: self.latitude, longitude: self.longitude))
 
         if location.horizontalAccuracy >= manager.desiredAccuracy && distanceInMeters > 1000 {
-            print("updated")
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
-            locationObservers.forEach { observer in
+            self.locationObservers.forEach { observer in
                 observer.updateLocation(locationCoordinate)
             }
         }

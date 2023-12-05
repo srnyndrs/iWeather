@@ -13,7 +13,6 @@ public final class WeatherService: NSObject, ObservableObject {
     
     func fetchWeatherData(coords: CLLocationCoordinate2D, _ completionHandler: @escaping((WeatherData) -> Void)) {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(coords.latitude)&lon=\(coords.longitude)&appid=\(API_KEY)&units=metric"
-        print(urlString)
         if let url = URL(string: urlString){
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in
@@ -35,7 +34,6 @@ public final class WeatherService: NSObject, ObservableObject {
     
     func fetchForecastData(coords: CLLocationCoordinate2D, _ completionHandler: @escaping((ForecastData) -> Void)) {
         let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(coords.latitude)&lon=\(coords.longitude)&appid=\(API_KEY)&units=metric"
-        print(urlString)
         if let url = URL(string: urlString){
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in

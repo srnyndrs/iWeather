@@ -15,7 +15,6 @@ struct LocationItemView: View {
             LocationRowView(cityName: locationName ?? weatherViewModel.cityName, temperature: weatherViewModel.temperature, weatherIconId: weatherViewModel.weatherIconImage, weatherDescription: weatherViewModel.weatherDescription)
                 .foregroundColor(.white)
         }.task {
-            //await weatherViewModel.refresh()
             weatherViewModel.fetchData()
         }
     }

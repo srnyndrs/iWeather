@@ -110,7 +110,6 @@
 				369624342AF6DD4F009D2D1E /* Model */,
 				36DA044E2AF8EAF00077B631 /* ViewModel */,
 				3696242C2AF6CF57009D2D1E /* View */,
-				369624272AF6C96D009D2D1E /* MainView.swift */,
 				3696240F2AF6B918009D2D1E /* iWeatherApp.swift */,
 				369624132AF6B91C009D2D1E /* Assets.xcassets */,
 				3696241A2AF6B91C009D2D1E /* iWeather.xcdatamodeld */,
@@ -139,6 +138,7 @@
 		3696242C2AF6CF57009D2D1E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				369624272AF6C96D009D2D1E /* MainView.swift */,
 				3696242D2AF6CF60009D2D1E /* Weather */,
 				3696F2572AFBADBE00AF5618 /* Location */,
 				369624222AF6BA28009D2D1E /* Map */,

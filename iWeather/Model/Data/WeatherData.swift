@@ -11,7 +11,6 @@ public struct WeatherData {
     let city: String
     let temperature: String
     let description: String
-    let iconName: String
     let weatherIconUrl: String
     let wind: String
     let humidity: String
@@ -31,7 +30,6 @@ public struct WeatherData {
         city = response?.name ?? ""
         temperature = "\(Int(response?.main?.temp ?? 0))"
         description = response?.weather?.first?.description ?? ""
-        iconName = response?.weather?.first?.icon ?? ""
         weatherIconUrl = ("https://openweathermap.org/img/wn/\(response?.weather?.first?.icon ?? "")@2x.png")
         wind = "\(Int(response?.wind?.speed ?? 0))"
         humidity = "\(Int(response?.main?.humidity ?? 0))"

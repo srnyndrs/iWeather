@@ -10,6 +10,7 @@ import MapKit
 
 struct WeatherMarker: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
+    var name: String
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
@@ -18,7 +19,7 @@ struct WeatherMarker: View {
                 .foregroundColor(.black)
             LazyVStack(alignment: .center, spacing: 0) {
                 LazyHStack {
-                    Text("\(weatherViewModel.cityName)")
+                    Text("\(name)")
                         .font(.system(size: 8))
                         .bold()
                 }
@@ -28,10 +29,11 @@ struct WeatherMarker: View {
                         .clipped()
                         .frame(width: 25, height: 25)
                 } placeholder: {
-                    ProgressView().frame(width: 25, height: 25)
+                    ProgressView()
+                        .frame(width: 25, height: 25)
                 }
                 Text(" \(weatherViewModel.temperature)°C")
-                .font(.system(size: 10))
+                    .font(.system(size: 10))
             }
             .padding(4)
             .foregroundColor(.white)
@@ -44,5 +46,5 @@ struct WeatherMarker: View {
 }
 
 #Preview {
-    WeatherMarker(weatherViewModel: WeatherViewModel(weatherService: WeatherService(), location: CLLocationCoordinate2D(latitude: 12, longitude: 12)))
+    WeatherMarker(weatherViewModel: WeatherViewModel(weatherService: WeatherService(), location: CLLocationCoordinate2D(latitude: 12, longitude: 12)), name: "city")
 }

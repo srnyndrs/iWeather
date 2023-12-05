@@ -27,7 +27,8 @@ struct ForecastCardView: View {
                         .clipped()
                         .frame(width: 50, height: 50)
                 } placeholder: {
-                    ProgressView().frame(width: 50, height: 50)
+                    ProgressView()
+                        .frame(width: 50, height: 50)
                 }
                 Text("\(Int(forecast.main?.temp ?? 0))°C")
                     .foregroundColor(.white)

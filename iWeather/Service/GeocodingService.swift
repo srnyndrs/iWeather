@@ -12,7 +12,6 @@ public final class GeocodingService: NSObject, ObservableObject {
     
     func fetchLocations(query: String, _ completionHandler: @escaping((LocationData) -> Void)) {
         let urlString = "https://api.geoapify.com/v1/geocode/search?text=\(query)&lang=en&limit=10&type=city&format=json&apiKey=\(API_KEY)"
-        print(urlString)
         if let url = URL(string: urlString){
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in

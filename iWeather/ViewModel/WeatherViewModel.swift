@@ -22,6 +22,7 @@ class WeatherViewModel: ObservableObject {
     @Published var humidity: String = "0"
     @Published var sunrise: String = "7:00"
     @Published var sunset: String = "20:00"
+    
     private var loaded: Bool = false
     
     init(weatherService: WeatherService, location: CLLocationCoordinate2D, locationManager: LocationManager? = nil) {
@@ -33,7 +34,6 @@ class WeatherViewModel: ObservableObject {
     
     func fetchData(_ forced: Bool = false) {
         if !loaded || forced {
-            print("Weather fetch")
             weatherService.fetchWeatherData(coords: location) { weather in
                 DispatchQueue.main.async {
                     self.cityName = weather.city

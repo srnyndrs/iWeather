@@ -66,8 +66,7 @@ struct LocationFormView: View {
                         }
                 }
                 .onSubmit(of: .text){
-                    //Task { await self.geocodingViewModel.searchForLocation() }
-                    self.geocodingViewModel.searchLocation()
+                    geocodingViewModel.searchLocation()
                 }
                 Section(header: Text("Location")) {
                     TextField("Name", text: $nameText)
@@ -124,7 +123,7 @@ struct LocationFormView: View {
             return
         }
         locationViewModel.addLocation(name: nameText, lat: latitude!, lon: longitude!)
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
     
 }
