@@ -41,6 +41,8 @@ struct WeatherDetailsView: View {
                 forecastViewModel.fetchData()
             }
         }.refreshable {
+            weatherViewModel.locationManager?.getLocation()
+            forecastViewModel.locationManager?.getLocation()
             weatherViewModel.fetchData(true)
             forecastViewModel.fetchData(true)
         }
