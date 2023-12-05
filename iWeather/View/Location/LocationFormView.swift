@@ -123,6 +123,7 @@ struct LocationFormView: View {
             return
         }
         locationViewModel.addLocation(name: nameText, lat: latitude!, lon: longitude!)
+        geocodingViewModel.resetSearch()
         presentationMode.wrappedValue.dismiss()
     }
     

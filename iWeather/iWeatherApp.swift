@@ -11,7 +11,7 @@ import SwiftUI
 struct iWeatherApp: App {
     private var weatherService = WeatherService()
     private var geocodingService = GeocodingService()
-    @ObservedObject private var locationManager = LocationManager()
+    @StateObject private var locationManager = LocationManager()
 
     var body: some Scene {
         WindowGroup {
@@ -23,7 +23,7 @@ struct iWeatherApp: App {
                 let geocodingViewModel = GeocodingViewModel(geocodingService: geocodingService)
                 // MainView initialization
                 MainView(weatherViewModel: weatherViewModel, forecastViewModel: forecastViewModel, locationViewModel: locationViewModel, geocodingViewModel: geocodingViewModel, locationManager: locationManager, weatherService: weatherService)
-                    .task {
+                    .onAppear {
                         locationManager.getLocation()
                     }
             } else {

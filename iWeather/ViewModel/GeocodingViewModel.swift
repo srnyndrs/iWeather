@@ -29,6 +29,7 @@ class GeocodingViewModel: ObservableObject {
     }
     
     func resetSearch() {
+        self.searchText = ""
         self.results = [LocationDataItem]()
     }
 }
