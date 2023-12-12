@@ -15,7 +15,7 @@ class WeatherViewModel: ObservableObject {
     var locationManager: LocationManager?
     
     @Published var cityName: String = "Unknown"
-    @Published var temperature: String = "--°C"
+    @Published var temperature: String = "--"
     @Published var weatherDescription: String = "Sunny"
     @Published var weatherIconImage: String = ""
     @Published var wind: String = "0"
